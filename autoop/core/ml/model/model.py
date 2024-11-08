@@ -6,5 +6,6 @@ from copy import deepcopy
 from typing import Literal
 
 class Model:
-    pass # your code (attribute and methods) here
+    def map(self, input_feature, target_feature):
+        raise NotImplementedError("This should be implemented by you.")
     
