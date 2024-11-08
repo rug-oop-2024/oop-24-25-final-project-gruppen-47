@@ -13,8 +13,9 @@ class Lasso(Model):
         _parameters: dictionary representing parameters
         lasso: SklearnLasso object representing the Lasso model
     """
-    def __inti__(self):
-        super.__init__()
+
+    def __init__(self):
+        super().__init__()
         self._lasso: SklearnLasso = SklearnLasso()
 
     def fit(self, observations: np.ndarray, ground_truths: np.ndarray) -> None:
