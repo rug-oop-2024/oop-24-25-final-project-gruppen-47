@@ -18,3 +18,8 @@ class Artifact(BaseModel):
         if ':' not in v:
             raise ValueError("Type must follow the format '<category>:<framework>'.")
         return v
+    
+    @property
+    def id(self) -> str:
+        path = base64.b64encode(self.asset_path.encode()).decode()
+        return f"{path}:{self.version}"
