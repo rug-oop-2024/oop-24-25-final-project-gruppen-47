@@ -5,7 +5,7 @@ from sklearn.ensemble import RandomForestClassifier as SKlearnRandomForest
 from autoop.core.ml.model.model import Model
 
 
-class Lasso(Model):
+class RandomForest(Model):
     """
     Class representing a Lasso model.
 
@@ -13,8 +13,8 @@ class Lasso(Model):
         _parameters: dictionary representing parameters
         lasso: SklearnLasso object representing the Lasso model
     """
-    def __inti__(self):
-        super.__init__()
+    def __init__(self):
+        super().__init__()
         self._random_forest: SKlearnRandomForest  = SKlearnRandomForest()
 
     def fit(self, observations: np.ndarray, ground_truths: np.ndarray) -> None:
