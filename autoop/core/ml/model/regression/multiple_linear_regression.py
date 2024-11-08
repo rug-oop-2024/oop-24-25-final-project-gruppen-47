@@ -37,9 +37,12 @@ class MultipleLinearRegression(Model):
                 "First argument should be a 2 dimensional numpy array."
             )
         if ground_truths.ndim != 1:
-            raise TypeError(
-                "Second argument should be a 1 dimensional numpy array."
-            )
+            if ground_truths.ndim == 2 and ground_truths.shape[1] == 1:
+                ground_truths = ground_truths.flatten()
+            else:
+                raise TypeError(
+                    "Second argument should be a 1 dimensional numpy array."
+                )
         number_of_samples = observations.shape[0]
         if number_of_samples != ground_truths.size:
             raise ValueError(
