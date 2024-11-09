@@ -16,6 +16,7 @@ METRICS = [
 
 class Metric(ABC):
     """Abstract Base class for all metrics."""
+
     @abstractmethod
     def evaluate(self, true: List, pred: List) -> float:
         """
@@ -28,12 +29,19 @@ class Metric(ABC):
         """
         pass
 
-    def __call__(self):
+    def __call__(self) -> float:
+        """
+        Invokes the evaluate method when the instance is called as a function.
+
+        Returns:
+            The result of the evaluate method.
+        """
         return self.evaluate()
     
 
 class Accuracy(Metric):
     """Description: Metric to evaluate accuracy."""
+
     def evaluate(self, true: List, pred: List) -> float:
         """
         Evaluate the accuracy.
@@ -49,6 +57,7 @@ class Accuracy(Metric):
     
 class Precision(Metric):
     """Description: Metric to evaluate precision."""
+
     def evaluate(self, true: List, pred: List) -> float:
         """
         Evaluate the precision.
@@ -83,6 +92,7 @@ class Precision(Metric):
 
 class Recall(Metric):
     """Description: Metric to evaluate recall."""
+
     def evaluate(self, true: List, pred: List) -> float:
         """
         Evaluate the recall.
@@ -117,6 +127,7 @@ class Recall(Metric):
     
 class MeanSquaredError(Metric):
     """Description: Metric to evaluate mean squared error."""
+
     def evaluate(self, true: List, pred: List) -> float:
         """
         Evaluate the mean squared error.
@@ -131,6 +142,7 @@ class MeanSquaredError(Metric):
 
 class MeanAbsoluteError(Metric):
     """Description: Metric to evaluate mean absolute error."""
+
     def evaluate(self, true: List, pred: List) -> float:
         """
         Evaluate the mean absolute error.
@@ -145,6 +157,7 @@ class MeanAbsoluteError(Metric):
     
 class RootMeanSquaredError(Metric):
     """Description: Metric to evaluate root mean squared error."""
+
     def evaluate(self, true: List, pred: List) -> float:
         """
         Evaluate the root mean squared error.
@@ -164,7 +177,7 @@ metrics_map: Dict[str, Type] = {
     "mean_absolute_error": MeanAbsoluteError,
     "root_mean_squared_error": RootMeanSquaredError
 }
-def get_metric(name: str):
+def get_metric(name: str) -> Metric:
     metric_class = metrics_map.get(name)
     if metric_class:
         return metric_class()
