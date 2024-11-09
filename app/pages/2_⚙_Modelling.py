@@ -8,7 +8,7 @@ from autoop.core.ml.metric import Accuracy, MeanAbsoluteError, MeanSquaredError,
 from autoop.core.ml.model.classification.k_nearest_neighbors import KNearestNeighbors
 from autoop.core.ml.model.classification.random_forest_wrap import RandomForest
 from autoop.core.ml.model.regression.multiple_linear_regression import MultipleLinearRegression
-from autoop.functional.feature import detect_feature_types
+from app.core.modelling.datasets import pick_dataset, select_features
 
 
 st.set_page_config(page_title="Modelling", page_icon="📈")
@@ -23,21 +23,9 @@ write_helper_text(
     "In this section, you can design a machine learning pipeline to train a model on a dataset."
 )
 
-automl = AutoMLSystem.get_instance()
+selected_dataset = pick_dataset()
 
-datasets = automl.registry.list(type="dataset")
-
-selected_dataset = st.selectbox(
-    "Please choose a dataset.",
-    datasets,
-    format_func=lambda dataset: dataset.name,
-    )
-
-print(type(selected_dataset))
-
-features = detect_feature_types(selected_dataset)
-
-input_features = st.multiselect("Please select the input features.", features, format_func=lambda feature: feature.name)
+input_features, target_feature = select_features(selected_dataset)
 
 
 if input_features.type == "categorical":
