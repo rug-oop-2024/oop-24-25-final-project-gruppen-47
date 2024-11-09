@@ -39,6 +39,8 @@ else:
     model = st.selectbox("Please select a model.", [Lasso, Ridge, MultipleLinearRegression], format_func=lambda model: model.__name__)
     metrics = st.multiselect("Please select the metrics to evaluate the model.", [MeanSquaredError, MeanAbsoluteError, RootMeanSquaredError], format_func=lambda metric: metric.__name__)
 
+# TODO change metrics to have attribute categorical or numerical
+
 split = st.slider("Please select the percentage of the dataset that will go for training.", 0, 100, 50)
 
 st.write(f"## Pipeline Configuration")

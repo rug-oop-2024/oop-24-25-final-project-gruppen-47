@@ -8,6 +8,7 @@ from autoop.core.ml.feature import Feature
 from autoop.core.ml.metric import Metric
 from autoop.functional.preprocessing import preprocess_features
 import numpy as np
+import pandas as pd
 
 
 class Pipeline:
@@ -139,8 +140,11 @@ Pipeline(
         self._train()
         self._evaluate()
         self._evaluate_train_data()
+        if self._target_feature.type == "categorical":
+            labels = pd.unique(self._dataset.read()[self._target_feature.name].values)
         return {
             "metrics_on_evaluation_set": self._metrics_results,
             "metrics_on_training_set": self._metrics_train_data_results,
             "predictions": self._predictions,
+            "labels": labels,
         }
