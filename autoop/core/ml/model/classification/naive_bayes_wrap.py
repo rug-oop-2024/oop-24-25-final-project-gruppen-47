@@ -1,11 +1,11 @@
 import numpy as np
 
-from sklearn.linear_model import LogisticRegression as SKlearnLogisticRegression 
+from sklearn.naive_bayes import GaussianNB as SKLearnGaussianNB
 
 from autoop.core.ml.model.model import Model
 
 
-class LogisticRegression(Model):
+class NaiveBayesModel(Model):
     """
     Class representing a Lasso model.
 
@@ -15,7 +15,7 @@ class LogisticRegression(Model):
     """
     def __init__(self):
         super().__init__()
-        self._logistic_regression: SKlearnLogisticRegression  = SKlearnLogisticRegression()
+        self._naive_bayes_gaussian: SKLearnGaussianNB  = SKLearnGaussianNB()
         self._type = "classification"
 
     def fit(self, observations: np.ndarray, ground_truths: np.ndarray) -> None:
@@ -42,11 +42,10 @@ class LogisticRegression(Model):
                 "Number of samples in training data do not match."
             )
 
-        self._logistic_regression.fit(observations, ground_truths)
-        self._parameters = self._logistic_regression.get_params()
-        self._parameters["classes"] = self._logistic_regression.classes_
-        self._parameters["coeficients"] = self._logistic_regression.coef_
-        self._parameters["intercept"] = self._logistic_regression.intercept_
+        self._naive_bayes_gaussian(observations, ground_truths)
+        self._parameters = self._naive_bayes_gaussian.get_params()
+        self._parameters["classes"] = self._naive_bayes_gaussian.classes_
+        self._parameters["epsilon"] = self._naive_bayes_gaussian.epsilon_
 
     def predict(self, observations: np.ndarray) -> np.ndarray:
         """
@@ -67,4 +66,4 @@ class LogisticRegression(Model):
         if observations.ndim != 2:
             raise TypeError("Argument should be a 2 dimensional numpy array.")
 
-        return self._logistic_regression.predict(observations)
+        return self._naive_bayes_gaussian.predict(observations)

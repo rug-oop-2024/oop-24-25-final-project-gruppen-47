@@ -9,7 +9,7 @@ from autoop.core.ml.model.classification.random_forest_wrap import RandomForest
 from autoop.core.ml.model.regression.multiple_linear_regression import MultipleLinearRegression
 from autoop.core.ml.model.regression.ridge_wrap import Ridge
 from autoop.core.ml.model.regression.lasso_wrap import Lasso
-from autoop.core.ml.model.classification.logistic_regression_wrap import LogisticRegression
+from autoop.core.ml.model.classification.naive_bayes_wrap import NaiveBayesModel
 from app.core.modelling.datasets import pick_dataset, select_features
 from autoop.core.ml.pipeline import Pipeline
 
@@ -33,7 +33,7 @@ input_features, target_feature = select_features(selected_dataset)
 
 if target_feature.type == "categorical":
     st.write("Based on the selected input features, you have to use classification models.")
-    model = st.selectbox("Please select a model.", [KNearestNeighbors, LogisticRegression, RandomForest], format_func=lambda model: model.__name__)
+    model = st.selectbox("Please select a model.", [KNearestNeighbors, NaiveBayesModel, RandomForest], format_func=lambda model: model.__name__)
     metrics = st.multiselect("Please select the metrics to evaluate the model.", [Accuracy, Precision, Recall], format_func=lambda metric: metric.__name__)
 else:
     model = st.selectbox("Please select a model.", [Lasso, Ridge, MultipleLinearRegression], format_func=lambda model: model.__name__)
