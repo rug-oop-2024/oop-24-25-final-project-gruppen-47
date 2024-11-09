@@ -22,9 +22,9 @@ class Artifact(BaseModel):
 
     def read(self) -> bytes:
         """Reads the artifact"""
-        return self._data
+        return self.data
 
     def save(self, data: bytes) -> bytes:
         """Saves the artifact"""
         self._data = data
-        return self._data
+        return self.data

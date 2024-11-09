@@ -3,6 +3,7 @@ import pandas as pd
 
 from app.core.system import AutoMLSystem
 from autoop.core.ml.dataset import Dataset
+from autoop.functional.feature import detect_feature_types
 
 
 st.set_page_config(page_title="Modelling", page_icon="📈")
@@ -26,4 +27,10 @@ selected_dataset = st.selectbox(
     datasets,
     format_func=lambda dataset: dataset.name,
     )
+
+print(type(selected_dataset))
+
+features = detect_feature_types(selected_dataset)
+
+input_features = st.multiselect("Please select the input features.", features, format_func=lambda feature: feature.name)
 
