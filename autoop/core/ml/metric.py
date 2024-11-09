@@ -10,8 +10,8 @@ METRICS = [
     "f1_score",
     "mean_squared_error",
     "mean_absolute_error",
-    "root_mean_squared_error"
-] 
+    "root_mean_squared_error",
+]
 
 
 class Metric(ABC):
@@ -37,7 +37,7 @@ class Metric(ABC):
             The result of the evaluate method.
         """
         return self.evaluate()
-    
+
 
 class Accuracy(Metric):
     """Description: Metric to evaluate accuracy."""
@@ -45,7 +45,7 @@ class Accuracy(Metric):
     def evaluate(self, true: List, pred: List) -> float:
         """
         Evaluate the accuracy.
-        
+
         Args:
             true: Ground truth values.
             pred: Predicted values.
@@ -54,8 +54,8 @@ class Accuracy(Metric):
         """
         true = np.argmax(true, axis=1)
         return np.mean(np.array(true) == np.array(pred))
-    
-    
+
+
 class Precision(Metric):
     """Description: Metric to evaluate precision."""
 
@@ -89,7 +89,7 @@ class Precision(Metric):
                 precisions.append(tp / (tp + fp))
 
         return sum(precisions) / len(precisions) if precisions else 0.0
-    
+
 
 class Recall(Metric):
     """Description: Metric to evaluate recall."""
@@ -126,7 +126,7 @@ class Recall(Metric):
 
         return sum(recalls) / len(recalls) if recalls else 0.0
 
-    
+
 class MeanSquaredError(Metric):
     """Description: Metric to evaluate mean squared error."""
 
@@ -140,7 +140,7 @@ class MeanSquaredError(Metric):
             float: Mean squared error.
         """
         return np.mean((np.array(true) - np.array(pred)) ** 2)
-    
+
 
 class MeanAbsoluteError(Metric):
     """Description: Metric to evaluate mean absolute error."""
@@ -155,8 +155,8 @@ class MeanAbsoluteError(Metric):
             float: Mean absolute error.
         """
         return np.mean(np.abs(np.array(true) - np.array(pred)))
-    
-    
+
+
 class RootMeanSquaredError(Metric):
     """Description: Metric to evaluate root mean squared error."""
 
@@ -170,15 +170,17 @@ class RootMeanSquaredError(Metric):
             float: Root mean squared error.
         """
         return np.sqrt(np.mean((np.array(true) - np.array(pred)) ** 2))
-    
+
+
 metrics_map: Dict[str, Type] = {
     "accuracy": Accuracy,
     "precision": Precision,
     "recall": Recall,
     "mean_squared_error": MeanSquaredError,
     "mean_absolute_error": MeanAbsoluteError,
-    "root_mean_squared_error": RootMeanSquaredError
+    "root_mean_squared_error": RootMeanSquaredError,
 }
+
 
 def get_metric(name: str) -> Metric:
     metric_class = metrics_map.get(name)
