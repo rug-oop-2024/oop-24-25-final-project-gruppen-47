@@ -25,7 +25,7 @@ def select_features(dataset: Dataset) -> tuple[List[Feature], Feature]:
     features = detect_feature_types(dataset)
 
     input_features = select_input_features(features)
-    target_feature = select_features(features)
+    target_feature = select_target_feature(features)
 
     return input_features, target_feature
 

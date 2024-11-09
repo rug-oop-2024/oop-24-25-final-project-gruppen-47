@@ -11,8 +11,6 @@ def detect_feature_types(dataset: Dataset) -> List[Feature]:
     """
 
     data = dataset.read()
-    print(type(dataset))
-    print(type(data))
     features = []
     for column in data.columns:
         if data[column].dtype == "object":

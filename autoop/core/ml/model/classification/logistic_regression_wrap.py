@@ -15,7 +15,8 @@ class LogisticRegression(Model):
     """
     def __init__(self):
         super().__init__()
-        self._logistic_regression: SKlearnLogisticRegression  = SKlearnLogisticRegression ()
+        self._logistic_regression: SKlearnLogisticRegression  = SKlearnLogisticRegression()
+        self._type = "classification"
 
     def fit(self, observations: np.ndarray, ground_truths: np.ndarray) -> None:
         """
@@ -34,6 +35,7 @@ class LogisticRegression(Model):
             ValueError: if number of samples in training data do not match
             TypeError: if either arguemnt is not a required type
         """
+        ground_truths = np.argmax(ground_truths, axis=1)
         number_of_samples = observations.shape[0]
         if number_of_samples != ground_truths.size:
             raise ValueError(

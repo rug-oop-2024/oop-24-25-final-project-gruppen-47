@@ -17,7 +17,18 @@ class KNearestNeighbors(Model):
     """
     def __init__(self, k:int = 3):
         super().__init__()
-        self.k: int = k  # noqa <VNE001>
+        self.k = k  # noqa <VNE001>
+        self._type = "classification"
+
+    @property
+    def k(self) -> int:
+        """
+        Return the value of k.
+
+        Returns:
+            int representing the number of neighbors to consider
+        """
+        return self._k
 
     @k.setter
     def k(self, value: int) -> None:  # noqa <N805>
@@ -51,6 +62,8 @@ class KNearestNeighbors(Model):
         Raises:
             ValueError: if number of samples in training data do not match.
         """
+        ground_truths = np.argmax(ground_truths, axis=1)
+        print(ground_truths)
         number_of_samples = observations.shape[0]
         if number_of_samples != ground_truths.size:
             raise ValueError(

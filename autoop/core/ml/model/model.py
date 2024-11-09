@@ -15,7 +15,7 @@ class Model(ABC):
 
     def __init__(self):
         self._parameters: dict = {}
-        self._type: Literal["regression", "classification"] = None
+        self._type: Literal["regression", "classification"]
 
     @abstractmethod
     def fit(self, observations: np.ndarray, ground_truths: np.ndarray) -> None:

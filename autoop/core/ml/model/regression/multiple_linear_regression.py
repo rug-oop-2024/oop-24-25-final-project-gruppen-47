@@ -15,6 +15,10 @@ class MultipleLinearRegression(Model):
         _parameters: dictionary representing parameters
     """
 
+    def __init__(self):
+        super().__init__()
+        self._type = "regression"
+
     def fit(self, observations: np.ndarray, ground_truths: np.ndarray) -> None:
         """
         Calculate the parameters based on a given training dataset.

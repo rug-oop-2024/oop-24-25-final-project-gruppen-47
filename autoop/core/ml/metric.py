@@ -52,6 +52,7 @@ class Accuracy(Metric):
         Returns:
             float: Accuracy.
         """
+        true = np.argmax(true, axis=1)
         return np.mean(np.array(true) == np.array(pred))
     
     
@@ -69,7 +70,7 @@ class Precision(Metric):
         """
         true_positives: Dict[int, int] = {}
         false_positives: Dict[int, int] = {}
-
+        true = np.argmax(true, axis=1)
         for t, p in zip(true, pred):
             if t == p:
                 if t not in true_positives:
@@ -104,6 +105,7 @@ class Recall(Metric):
         """
         true_positives: Dict[int, int] = {}
         false_negatives: Dict[int, int] = {}
+        true = np.argmax(true, axis=1)
 
         for t, p in zip(true, pred):
             if t == p:

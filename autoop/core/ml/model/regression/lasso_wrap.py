@@ -17,6 +17,7 @@ class Lasso(Model):
     def __init__(self):
         super().__init__()
         self._lasso: SklearnLasso = SklearnLasso()
+        self._type = "regression"
 
     def fit(self, observations: np.ndarray, ground_truths: np.ndarray) -> None:
         """
