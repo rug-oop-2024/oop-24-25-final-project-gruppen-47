@@ -177,6 +177,7 @@ metrics_map: Dict[str, Type] = {
     "mean_absolute_error": MeanAbsoluteError,
     "root_mean_squared_error": RootMeanSquaredError
 }
+
 def get_metric(name: str) -> Metric:
     metric_class = metrics_map.get(name)
     if metric_class:
