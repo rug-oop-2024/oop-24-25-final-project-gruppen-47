@@ -15,7 +15,7 @@ class NaiveBayesModel(Model):
     """
     def __init__(self):
         super().__init__()
-        self._naive_bayes_gaussian: SKLearnGaussianNB  = SKLearnGaussianNB()
+        self._naive_bayes_gaussian = SKLearnGaussianNB()
         self._type = "classification"
 
     def fit(self, observations: np.ndarray, ground_truths: np.ndarray) -> None:
@@ -42,7 +42,7 @@ class NaiveBayesModel(Model):
                 "Number of samples in training data do not match."
             )
 
-        self._naive_bayes_gaussian(observations, ground_truths)
+        self._naive_bayes_gaussian.fit(observations, ground_truths)
         self._parameters = self._naive_bayes_gaussian.get_params()
         self._parameters["classes"] = self._naive_bayes_gaussian.classes_
         self._parameters["epsilon"] = self._naive_bayes_gaussian.epsilon_

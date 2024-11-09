@@ -63,7 +63,6 @@ class KNearestNeighbors(Model):
             ValueError: if number of samples in training data do not match.
         """
         ground_truths = np.argmax(ground_truths, axis=1)
-        print(ground_truths)
         number_of_samples = observations.shape[0]
         if number_of_samples != ground_truths.size:
             raise ValueError(

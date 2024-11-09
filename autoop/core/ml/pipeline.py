@@ -98,10 +98,7 @@ Pipeline(
     def _train(self):
         X = self._compact_vectors(self._train_X)
         Y = self._train_y
-        print(X.shape)
-        print(Y)
         self._model.fit(X, Y)
-        print(self._model.parameters)
 
     def _evaluate(self):
         X = self._compact_vectors(self._test_X)
