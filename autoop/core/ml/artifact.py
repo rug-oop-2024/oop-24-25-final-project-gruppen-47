@@ -6,6 +6,7 @@ import base64
 class Artifact(BaseModel):
     """Description: Base class for all artifacts."""
 
+    name: str = Field()
     asset_path: str = Field()
     _data: bytes = PrivateAttr()
     version: str = Field(default="1.0.0")
