@@ -1,4 +1,4 @@
-import streamlit as sl
+import streamlit as st
 import pandas as pd
 from typing import IO
 

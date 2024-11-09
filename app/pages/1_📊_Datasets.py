@@ -9,7 +9,7 @@ automl = AutoMLSystem.get_instance()
 
 datasets = automl.registry.list(type="dataset")
 
-current_dataset = st.selectbox("Please choose a dataset.", datasets)
+current_dataset = st.selectbox("Please choose a dataset.", [x.name for x in datasets])
 
 uploaded_datasets = st.file_uploader(
     "Upload datasets.", type="csv", accept_multiple_files=True

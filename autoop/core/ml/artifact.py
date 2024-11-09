@@ -8,11 +8,11 @@ class Artifact(BaseModel):
 
     name: str = Field()
     asset_path: str = Field()
-    _data: bytes = PrivateAttr()
+    data: bytes = Field()
     version: str = Field(default="1.0.0")
-    metadata: Dict[str, str] = Field(default=dict)
+    metadata: Dict[str, str] = Field(default_factory=dict)
     type: str = Field(default="")
-    tags: List[str] = Field(default=list)
+    tags: List[str] = Field(default_factory=list)
 
     @property
     def id(self) -> str:
@@ -20,7 +20,6 @@ class Artifact(BaseModel):
         path = base64.b64encode(self.asset_path.encode()).decode()
         return f"{path}:{self.version}"
 
-    @property
     def read(self) -> bytes:
         """Reads the artifact"""
         return self._data
