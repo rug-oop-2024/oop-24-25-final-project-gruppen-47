@@ -1,8 +1,13 @@
+from sklearn.linear_model import Lasso, LogisticRegression, Ridge
 import streamlit as st
 import pandas as pd
 
 from app.core.system import AutoMLSystem
 from autoop.core.ml.dataset import Dataset
+from autoop.core.ml.metric import Accuracy, MeanAbsoluteError, MeanSquaredError, Precision, Recall, RootMeanSquaredError
+from autoop.core.ml.model.classification.k_nearest_neighbors import KNearestNeighbors
+from autoop.core.ml.model.classification.random_forest_wrap import RandomForest
+from autoop.core.ml.model.regression.multiple_linear_regression import MultipleLinearRegression
 from autoop.functional.feature import detect_feature_types
 
 
@@ -33,4 +38,15 @@ print(type(selected_dataset))
 features = detect_feature_types(selected_dataset)
 
 input_features = st.multiselect("Please select the input features.", features, format_func=lambda feature: feature.name)
+
+
+if input_features.type == "categorical":
+    st.write("Based on the selected input features, you have to use classification models.")
+    model = st.selectbox("Please select a model.", [KNearestNeighbors, LogisticRegression, RandomForest])
+    metrics = st.multiselect("Please select the metrics to evaluate the model.", [Accuracy, Precision, Recall])
+else:
+    model = st.selectbox("Please select a model.", [Lasso, Ridge, MultipleLinearRegression])
+    metrics = st.multiselect("Please select the metrics to evaluate the model.", [MeanSquaredError, MeanAbsoluteError, RootMeanSquaredError])
+
+split = st.slider("Please select the percentage of the dataset that will go for training.", 0, 100, 50)
 
