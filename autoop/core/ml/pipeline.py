@@ -139,14 +139,14 @@ Pipeline(
             for vector in self._input_vectors
         ]
         self._test_X = [
-            vector[int(split * len(vector)) :]
+            vector[int(split * len(vector)):]
             for vector in self._input_vectors
         ]
         self._train_y = self._output_vector[
             : int(split * len(self._output_vector))
         ]
         self._test_y = self._output_vector[
-            int(split * len(self._output_vector)) :
+            int(split * len(self._output_vector)):
         ]
 
     def _compact_vectors(self, vectors: List[np.array]) -> np.array:
@@ -207,7 +207,6 @@ Pipeline(
             "labels": self.labels,
         }
 
-
     def to_artifact(self, name: str, version: str) -> Artifact:
         """
         Convert the pipeline to an artifact.
@@ -218,7 +217,7 @@ Pipeline(
             Artifact: The artifact
         """
         data = pickle.dumps(self)
-        
+
         return Artifact(
             name=name,
             version=version,

@@ -27,12 +27,14 @@ def select_model(type: Literal["categorical", "numerical"]) -> Model:
     """
     if type == "categorical":
         st.write(
-            "Based on the selected input features, you have to use classification models."
+            "Based on the selected input features, "
+            "you have to use classification models."
         )
         model_list = CLASSIFICATION_MODELS
     else:
         st.write(
-            "Based on the selected input features, you have to use regression models."
+            "Based on the selected input features, "
+            "you have to use regression models."
         )
         model_list = REGRESSION_MODELS
 
@@ -44,9 +46,7 @@ def select_model(type: Literal["categorical", "numerical"]) -> Model:
     return get_model(model)
 
 
-def select_metric(
-    type: Literal["categorical", "numerical"]
-) -> List[Metric]:
+def select_metric(type: Literal["categorical", "numerical"]) -> List[Metric]:
     """
     Select a metric.
 
@@ -70,8 +70,14 @@ def select_metric(
 
 
 def select_split() -> int:
+    """
+    Select the split percentage.
+
+    Returns:
+        int: The split percentage.
+    """
     split = st.slider(
-        "Please select the percentage of the dataset that will go for training",
+        "Please select the percentage of the dataset that will go to training",
         0,
         100,
         50,

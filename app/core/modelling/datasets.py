@@ -31,7 +31,9 @@ def pick_dataset() -> Dataset:
     return artifact_to_dataset(selected_dataset)
 
 
-def select_features(dataset: Dataset, both: bool = True) ->  tuple[List[Feature], Feature | None]:
+def select_features(
+    dataset: Dataset, both: bool = True
+) -> tuple[List[Feature], Feature | None]:
     """
     Select input and target features.
 
