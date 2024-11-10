@@ -4,6 +4,7 @@ from app.core.system import AutoMLSystem
 from autoop.core.ml.artifact import Artifact
 from autoop.core.ml.model import Model
 
+
 def select_pipeline() -> Artifact:
     """
     List the deployed pipelines.
@@ -25,10 +26,11 @@ def select_pipeline() -> Artifact:
 
     return selected_pipeline
 
+
 def write_summary(pipeline: Artifact, model: Model) -> None:
     """
     Write the summary of the pipeline.
-    
+
     Args:
         pipeline (Artifact): The pipeline.
         model (Model): The model.

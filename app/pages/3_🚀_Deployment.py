@@ -45,12 +45,9 @@ try:
             f"{", ".join([labels[prd] for prd in predictions])}"
         )
     else:
-        st.write(
-            f"**Predictions**: {predictions}"
-        )
+        st.write(f"**Predictions**: {predictions}")
 except ValueError as e:
     # st.write("Please upload a CSV file for predictions.")
     st.write(e.args[0])
 except KeyboardInterrupt:
     pass
-

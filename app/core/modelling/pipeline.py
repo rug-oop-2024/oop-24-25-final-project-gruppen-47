@@ -44,9 +44,7 @@ def select_model(type: Literal["categorical", "numerical"]) -> Model:
     return get_model(model)
 
 
-def select_metric(
-    type: Literal["categorical", "numerical"]
-) -> List[Metric]:
+def select_metric(type: Literal["categorical", "numerical"]) -> List[Metric]:
     """
     Select a metric.
 

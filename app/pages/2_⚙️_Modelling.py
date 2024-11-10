@@ -95,9 +95,7 @@ try:
                 f"{", ".join([labels[prd] for prd in results["predictions"]])}"
             )
         else:
-            st.write(
-                f"**Predictions**: {results["predictions"]}"
-            )
+            st.write(f"**Predictions**: {results["predictions"]}")
 
 except ValueError as e:
     st.write("Error: please fill all the required fields.")
