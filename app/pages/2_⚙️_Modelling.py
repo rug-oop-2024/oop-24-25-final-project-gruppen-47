@@ -6,6 +6,7 @@ from app.core.system import AutoMLSystem
 
 from app.core.modelling.datasets import pick_dataset, select_features
 from app.core.modelling.pipeline import (
+    get_name_and_version,
     select_model,
     select_metric,
     select_split,
@@ -23,7 +24,7 @@ st.set_page_config(page_title="Modelling", page_icon="📈")
 def write_helper_text(text: str):
     """
     Write a helper text in the app.
-    
+
     Args:
         text (str): The text to be displayed.
     """
@@ -73,32 +74,38 @@ try:
             split=split / 100,
         )
 
+        # Execute the pipeline and unpack data
         results = st.session_state.pipeline.execute()
         labels = results["labels"]
         eval_results = results["metrics_on_evaluation_set"]
         train_results = results["metrics_on_training_set"]
         predictions = results["predictions"]
 
+        # List the labels and convert the predictions to labels
         if labels is not None:
             st.write(f"Classes: {", ".join(labels)}")  # noqa: E999
             predictions = [labels[prd] for prd in predictions]
 
+        # Write the results of metrics
         st.write("### Evaluation Set")
         write_metric_results(eval_results)
 
         st.write("### Training Set")
         write_metric_results(train_results)
 
-        write_predictions(predictions, input_features, selected_dataset, split)
-    
+        # Write the predictions
+        write_predictions(
+            predictions, input_features, selected_dataset, split / 100
+        )
+
 except ValueError as e:
     st.write("Error: please fill all the required fields.")
     st.write(e.args[0])
 
 try:
-    artifact_name = st.text_input("Enter your pipeline name:")
-    artifact_version = st.text_input("Enter your pipeline version:")
+    artifact_name, artifact_version = get_name_and_version()
 
+    # Save the pipeline as an artifact
     if st.button("Save Pipeline"):
         assert artifact_name != "", st.write("Field Name cannot be empty.")
         assert artifact_version != "", st.write(

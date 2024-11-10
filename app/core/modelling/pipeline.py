@@ -90,6 +90,7 @@ def select_split() -> int:
 
     return split
 
+
 def write_metric_results(metric_results: List[tuple[Metric, float]]) -> None:
     """
     Write the metric results.
@@ -100,7 +101,13 @@ def write_metric_results(metric_results: List[tuple[Metric, float]]) -> None:
     for metric, result in metric_results:
         st.write(f"{metric.__class__.__name__}: {result}")
 
-def write_predictions(predictions: List[float], features: List[Feature], dataset: Dataset, split: float) -> None:
+
+def write_predictions(
+    predictions: List[float],
+    features: List[Feature],
+    dataset: Dataset,
+    split: float,
+) -> None:
     """
     Write the predictions.
 
@@ -118,8 +125,11 @@ def write_predictions(predictions: List[float], features: List[Feature], dataset
     )
     predictions_df["Predictions"] = predictions
     st.write(predictions_df)
-    
-def preprocess_input(features: List[Feature], dataset: Dataset, split: float) -> np.ndarray:
+
+
+def preprocess_input(
+    features: List[Feature], dataset: Dataset, split: float
+) -> np.ndarray:
     """
     Preprocess the features.
 
@@ -135,8 +145,20 @@ def preprocess_input(features: List[Feature], dataset: Dataset, split: float) ->
     input_data = [data for (feature_name, data, artifact) in input_results]
 
     input_test_X = [
-        vector[int(split * len(vector)) :]
-        for vector in input_data
+        vector[int(split * len(vector)) :] for vector in input_data
     ]
 
     return np.concatenate(input_test_X, axis=1)
+
+
+def get_name_and_version() -> tuple[str, str]:
+    """
+    Get the name and version of the pipeline.
+
+    Returns:
+        tuple[str, str]: The name and version of the pipeline.
+    """
+    artifact_name = st.text_input("Enter your pipeline name:")
+    artifact_version = st.text_input("Enter your pipeline version:")
+
+    return artifact_name, artifact_version
