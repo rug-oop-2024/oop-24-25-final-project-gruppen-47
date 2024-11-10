@@ -12,6 +12,7 @@ class Model(ABC):
 
     Attributes:
         _parameters: dictionary representing parameters
+        _type: type of the model
     """
 
     def __init__(self) -> None:

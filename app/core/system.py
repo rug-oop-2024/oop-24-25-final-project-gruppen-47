@@ -9,6 +9,13 @@ class ArtifactRegistry:
     """Artifact registry to store and retrieve artifacts"""
 
     def __init__(self, database: Database, storage: Storage) -> None:
+        """
+        Initialize the artifact registry.
+
+        Args:
+            database (Database): Database to store metadata.
+            storage (Storage): Storage to store artifacts.
+        """
         self._database = database
         self._storage = storage
 
@@ -30,7 +37,7 @@ class ArtifactRegistry:
             "metadata": artifact.metadata,
             "type": artifact.type,
         }
-        self._database.set(f"artifacts", artifact.id, entry)
+        self._database.set("artifacts", artifact.id, entry)
 
     def list(self, type: str = None) -> List[Artifact]:
         """
@@ -80,7 +87,7 @@ class ArtifactRegistry:
             type=data["type"],
         )
 
-    def delete(self, artifact_id: str):
+    def delete(self, artifact_id: str) -> None:
         """
         Delete an artifact from the registry.
 
@@ -98,13 +105,25 @@ class AutoMLSystem:
     _instance = None
 
     def __init__(self, storage: LocalStorage, database: Database) -> None:
+        """
+        Initialize the AutoML System.
+
+        Args:
+            storage (LocalStorage): Local storage.
+            database (Database): Database to store information.
+        """
         self._storage = storage
         self._database = database
         self._registry = ArtifactRegistry(database, storage)
 
     @staticmethod
-    def get_instance():
-        """Get the singleton instance of the AutoML System"""
+    def get_instance() -> "AutoMLSystem":
+        """
+        Get the singleton instance of the AutoML System
+
+        Returns:
+            AutoMLSystem: The singleton instance of the AutoML System
+        """
         if AutoMLSystem._instance is None:
             AutoMLSystem._instance = AutoMLSystem(
                 LocalStorage("./assets/objects"),
@@ -114,6 +133,11 @@ class AutoMLSystem:
         return AutoMLSystem._instance
 
     @property
-    def registry(self):
-        """Get the artifact registry"""
+    def registry(self) -> ArtifactRegistry:
+        """
+        Get the artifact registry
+
+        Returns:
+            ArtifactRegistry: The artifact registry
+        """
         return self._registry

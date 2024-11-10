@@ -38,7 +38,6 @@ def select_features(dataset: Dataset) -> tuple[List[Feature], Feature]:
         tuple[List[Feature], Feature]:
             The selected input features and target feature.
     """
-    automl = AutoMLSystem.get_instance()
     features = detect_feature_types(dataset)
 
     input_features = select_input_features(features)

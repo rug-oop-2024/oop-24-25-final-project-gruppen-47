@@ -1,5 +1,10 @@
+"""Module to manage models.
+
+This module contains the factory function to get a model by name.
+"""
+
 from autoop.core.ml.model.model import Model
-from autoop.core.ml.model.regression import MultipleLinearRegression
+from autoop.core.ml.model.regression import MultipleLinearRegression  # noqa
 
 REGRESSION_MODELS = []  # add your models as str here
 

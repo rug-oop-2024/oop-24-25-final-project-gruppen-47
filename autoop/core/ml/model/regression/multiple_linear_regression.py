@@ -1,8 +1,4 @@
-from typing import Any
-
 import numpy as np
-
-from pydantic import PrivateAttr
 
 from autoop.core.ml.model.model import Model
 
@@ -12,10 +8,12 @@ class MultipleLinearRegression(Model):
     Class representing a multiple linear regression model.
 
     Attributes:
-        _parameters: dictionary representing parameters
+        _parameters (dict): dictionary representing parameters
+        _type (str): type of the model
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
+        """Initialize the multiple linear regression model."""
         super().__init__()
         self._type = "regression"
 
@@ -91,7 +89,7 @@ class MultipleLinearRegression(Model):
         predictions = [self._predict_single(x) for x in observations]
         return np.array(predictions)
 
-    def _predict_single(self, observation: np.ndarray) -> Any:
+    def _predict_single(self, observation: np.ndarray) -> float:
         """
         Make a prediciton for a single observation based on parameters.
 

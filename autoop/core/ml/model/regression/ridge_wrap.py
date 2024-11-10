@@ -11,10 +11,12 @@ class Ridge(Model):
 
     Attributes:
         _parameters: dictionary representing parameters
-        lasso: SklearnLasso object representing the Lasso model
+        _ridge (SKlearnRidge): SklearnRidge object representing the Lasso model
+        _type (str): string representing the type of model
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
+        """Initialize the Lasso model."""
         super().__init__()
         self._ridge: SklearnRidge = SklearnRidge()
         self._type = "regression"

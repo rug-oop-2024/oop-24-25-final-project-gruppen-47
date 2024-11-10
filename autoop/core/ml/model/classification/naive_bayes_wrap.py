@@ -10,11 +10,14 @@ class NaiveBayesModel(Model):
     Class representing a Lasso model.
 
     Attributes:
-        _parameters: dictionary representing parameters
-        lasso: SklearnLasso object representing the Lasso model
+        _parameters (dict): dictionary representing parameters
+        _naive_bayes_gaussian (SKLearnGaussianNB): SKLearnGaussianNB object
+            representing the Naive Bayes model
+        _type (str): string representing the type of model
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
+        """Initialize the Naive Bayes model."""
         super().__init__()
         self._naive_bayes_gaussian = SKLearnGaussianNB()
         self._type = "classification"
