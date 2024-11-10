@@ -82,10 +82,11 @@ st.write(f"**Metrics**: {', '.join([x.__name__ for x in metrics])}")
 
 st.write(f"## Results")
 
-run = st.button("Run Pipeline")
+if 'pipeline' not in st.session_state:
+    st.session_state.pipeline = None
 
-if run:
-    pipeline = Pipeline(
+if st.button("Run Pipeline"):
+    st.session_state.pipeline = Pipeline(
         dataset=selected_dataset,
         model=model(),
         input_features=input_features,
@@ -93,18 +94,15 @@ if run:
         metrics=list(metric() for metric in metrics),
         split=split / 100,
     )
-    results = pipeline.execute()
-    st.write(f"**Model Parameters**: {pipeline.model.parameters}")
+    results = st.session_state.pipeline.execute()
+    st.write(f"**Model Parameters**: {st.session_state.pipeline.model.parameters}")
     st.write(f"**Metrics on evaluation set**: {results["metrics_on_evaluation_set"]}")
     st.write(f"**Metrics on training set**: {results["metrics_on_training_set"]}")
     st.write(f"**Predictions**: {results["predictions"]}")
 
     # artifact_name = st.text_input("Enter your pipleine name:")
-    save = st.button("Save Pipeline")
-    print(save)
-
-    if save:
-        new_artifact = pipeline.to_artifact("jozo")
+    if st.button("Save Pipeline"):
+        new_artifact = st.session_state.pipeline.to_artifact("jozo")
         st.write(type(new_artifact))
         print(type(new_artifact))
         automl.registry.register(new_artifact)
