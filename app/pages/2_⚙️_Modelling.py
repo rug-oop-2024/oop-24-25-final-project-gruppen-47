@@ -37,6 +37,7 @@ write_helper_text(
     "a model on a dataset."
 )
 
+# Select the dataset and features
 selected_dataset = pick_dataset()
 
 if selected_dataset:
@@ -48,6 +49,7 @@ if selected_dataset:
 
     split = select_split()
 
+# Display the configuration
 st.title("Pipeline Configuration")
 
 st.write(f"**Dataset**: {selected_dataset.name}")
