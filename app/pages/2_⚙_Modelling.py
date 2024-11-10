@@ -89,7 +89,7 @@ st.write(f"**Metrics**: {', '.join([x.__name__ for x in metrics])}")
 
 st.write(f"## Results")
 
-if 'pipeline' not in st.session_state:
+if "pipeline" not in st.session_state:
     st.session_state.pipeline = None
 
 if st.button("Run Pipeline"):
@@ -102,9 +102,15 @@ if st.button("Run Pipeline"):
         split=split / 100,
     )
     results = st.session_state.pipeline.execute()
-    st.write(f"**Model Parameters**: {st.session_state.pipeline.model.parameters}")
-    st.write(f"**Metrics on evaluation set**: {results["metrics_on_evaluation_set"]}")
-    st.write(f"**Metrics on training set**: {results["metrics_on_training_set"]}")
+    st.write(
+        f"**Model Parameters**: {st.session_state.pipeline.model.parameters}"
+    )
+    st.write(
+        f"**Metrics on evaluation set**: {results["metrics_on_evaluation_set"]}"
+    )
+    st.write(
+        f"**Metrics on training set**: {results["metrics_on_training_set"]}"
+    )
     st.write(f"**Predictions**: {results["predictions"]}")
 
     # artifact_name = st.text_input("Enter your pipleine name:")

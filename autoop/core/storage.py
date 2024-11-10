@@ -10,7 +10,7 @@ class NotFoundError(Exception):
     def __init__(self, path: str) -> None:
         """
         Initialize the exception
-        
+
         Args:
             path: Path that was not found
         """
@@ -68,7 +68,7 @@ class LocalStorage(Storage):
     def __init__(self, base_path: str = "./assets") -> None:
         """
         Initialize the local storage
-        
+
         Args:
             base_path (str): Base path to store data
         """

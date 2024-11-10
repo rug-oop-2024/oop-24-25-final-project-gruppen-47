@@ -107,7 +107,7 @@ class AutoMLSystem:
     def __init__(self, storage: LocalStorage, database: Database) -> None:
         """
         Initialize the AutoML System.
-        
+
         Args:
             storage (LocalStorage): Local storage.
             database (Database): Database to store information.
@@ -120,7 +120,7 @@ class AutoMLSystem:
     def get_instance() -> "AutoMLSystem":
         """
         Get the singleton instance of the AutoML System
-        
+
         Returns:
             AutoMLSystem: The singleton instance of the AutoML System
         """
@@ -136,7 +136,7 @@ class AutoMLSystem:
     def registry(self) -> ArtifactRegistry:
         """
         Get the artifact registry
-        
+
         Returns:
             ArtifactRegistry: The artifact registry
         """

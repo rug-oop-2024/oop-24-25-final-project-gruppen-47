@@ -20,7 +20,7 @@ class KNearestNeighbors(Model):
     def __init__(self, k: int = 3) -> None:
         """
         Initialize the K-Nearest Neighbors model.
-        
+
         Args:
             k: int representing the number of neighbors to consider
                 when making a prediction
@@ -100,7 +100,9 @@ class KNearestNeighbors(Model):
         predictions = [self._predict_single(x) for x in observations]
         return np.array(predictions)
 
-    def _predict_single(self, observation: np.ndarray) -> list[tuple[Any, int]]:
+    def _predict_single(
+        self, observation: np.ndarray
+    ) -> list[tuple[Any, int]]:
         """
         Make a prediction for a single observation.
 

@@ -13,7 +13,7 @@ def preprocess_features(
         features (List[Feature]): List of features.
         dataset (Dataset): Dataset object.
     Returns:
-        List[str, Tuple[np.ndarray, dict]]: List of preprocessed features. 
+        List[str, Tuple[np.ndarray, dict]]: List of preprocessed features.
             Each ndarray of shape (N, ...)
     """
     results = []
