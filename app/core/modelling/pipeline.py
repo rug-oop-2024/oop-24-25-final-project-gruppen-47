@@ -145,7 +145,7 @@ def preprocess_input(
     input_data = [data for (feature_name, data, artifact) in input_results]
 
     input_test_X = [
-        vector[int(split * len(vector)) :] for vector in input_data
+        vector[int(split * len(vector)):] for vector in input_data
     ]
 
     return np.concatenate(input_test_X, axis=1)
