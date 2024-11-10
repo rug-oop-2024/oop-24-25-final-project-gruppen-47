@@ -1,5 +1,6 @@
 import pickle
 import numpy as np
+import pandas as pd
 import streamlit as st
 
 from app.core.deployment.management import select_pipeline, write_summary
@@ -39,15 +40,24 @@ try:
     input_X = np.concatenate(input_data, axis=1)
 
     predictions = model.predict(input_X)
-    if labels is not None:
-        st.write(
-            f"**Predictions**: "
-            f"{", ".join([labels[prd] for prd in predictions])}"
+
+    def convert_df_to_csv(df):
+        return df.to_csv(index=False).encode('utf-8')
+
+    if st.button("Show predictions"):
+        predictions_df = pd.DataFrame(input_X, columns=[f.name for f in input_features])
+        predictions_df["Predictions"] = predictions
+        if labels is not None:
+            predictions_df["Labels"] = [labels[prd] for prd in predictions]
+        csv = convert_df_to_csv(predictions_df)
+        st.write(predictions_df)
+        st.download_button(
+            label="Download CSV",
+            data=csv,
+            file_name="predictions.csv",
+            mime="text/csv",
         )
-    else:
-        st.write(
-            f"**Predictions**: {predictions}"
-        )
+        
 except ValueError as e:
     # st.write("Please upload a CSV file for predictions.")
     st.write(e.args[0])

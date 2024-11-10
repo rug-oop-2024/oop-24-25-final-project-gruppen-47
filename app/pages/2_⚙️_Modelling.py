@@ -1,3 +1,5 @@
+import numpy as np
+import pandas as pd
 import streamlit as st
 
 from app.core.system import AutoMLSystem
@@ -9,6 +11,7 @@ from app.core.modelling.pipeline import (
     select_split,
 )
 from autoop.core.ml.pipeline import Pipeline
+from autoop.functional.preprocessing import preprocess_features
 
 automl = AutoMLSystem.get_instance()
 
@@ -89,19 +92,26 @@ try:
             f"{"  \n".join(train_results_strings)}"
         )
 
+        input_results = preprocess_features(input_features, selected_dataset)
+        input_data = [data for (feature_name, data, artifact) in input_results]
+
+        input_test_X = [
+            vector[int((split/100) * len(vector)) :]
+            for vector in input_data
+        ]
+
+        input_X = np.concatenate(input_test_X, axis=1)
+
+        predictions_df = pd.DataFrame(input_X, columns=[f.name for f in input_features])
+        predictions_df["Predictions"] = results["predictions"]
         if labels is not None:
-            st.write(
-                f"**Predictions**: "
-                f"{", ".join([labels[prd] for prd in results["predictions"]])}"
-            )
-        else:
-            st.write(
-                f"**Predictions**: {results["predictions"]}"
-            )
+            predictions_df["Labels"] = [labels[prd] for prd in results["predictions"]]
+        st.write(predictions_df)
+
 
 except ValueError as e:
     st.write("Error: please fill all the required fields.")
-    st.write(e.args[0])
+    st.write(e)
 
 try:
     artifact_name = st.text_input("Enter your pipeline name:")
