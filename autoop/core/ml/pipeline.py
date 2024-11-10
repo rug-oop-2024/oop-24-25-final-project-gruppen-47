@@ -32,7 +32,7 @@ class Pipeline:
             model: Model
             input_features: List of features to be used as input
             target_feature: Feature to be used as target
-            split: float representing the percentage of the dataset 
+            split: float representing the percentage of the dataset \
                     that will go for training
         """
         self._dataset = dataset
@@ -43,11 +43,11 @@ class Pipeline:
         self._artifacts = {}
         self._split = split
         if (
-            target_feature.type == "categorical" and 
-            model.type != "classification"
+            target_feature.type == "categorical"
+            and model.type != "classification"
         ):
             raise ValueError(
-                "Model type must be classification "\
+                "Model type must be classification "
                 "for categorical target feature"
             )
         if target_feature.type == "continuous" and model.type != "regression":
@@ -78,7 +78,7 @@ Pipeline(
     @property
     def artifacts(self) -> List[Artifact]:
         """
-        Used to get the artifacts generated during 
+        Used to get the artifacts generated during
             the pipeline execution to be saved
         """
         artifacts = []
@@ -139,20 +139,20 @@ Pipeline(
             for vector in self._input_vectors
         ]
         self._test_X = [
-            vector[int(split * len(vector)) :]
+            vector[int(split * len(vector)):]
             for vector in self._input_vectors
         ]
         self._train_y = self._output_vector[
             : int(split * len(self._output_vector))
         ]
         self._test_y = self._output_vector[
-            int(split * len(self._output_vector)) :
+            int(split * len(self._output_vector)):
         ]
 
     def _compact_vectors(self, vectors: List[np.array]) -> np.array:
         """
         Concatenate the input vectors into a single matrix.
-        
+
         Args:
             vectors: List of input vectors
         Returns:
