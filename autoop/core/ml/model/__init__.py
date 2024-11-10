@@ -15,13 +15,13 @@ from autoop.core.ml.model.regression import (
     Lasso,
 )
 
-REGRESSION_MODELS = [
+CLASSIFICATION_MODELS = [
     "K Nearest Neighbors",
     "Naive Bayes Model",
     "Random Forest",
 ]  # add your models as str here
 
-CLASSIFICATION_MODELS = [
+REGRESSION_MODELS = [
     "Lasso",
     "Ridge",
     "Multiple Linear Regression",
