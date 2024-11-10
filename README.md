@@ -152,6 +152,7 @@ If the feature has been implemented by both students, write `both`.
 If you did not implement the feature
 
 | Requirement                           | Type (FN/NF) | Implemented by       | Implementation Completed (add X if done) | Comment |
+|-------------------------------------- |--------------|----------------------|--------------------------|---------|     
 | Up-to-date requirements.txt           | NF           |      both            | X   |   :)      | 
 | `ML/detect-features`                  | FN           |     both             | X   |   :)      | 
 | `ML/artifact`                         | NF           |    both              | X   |   :)      | 
