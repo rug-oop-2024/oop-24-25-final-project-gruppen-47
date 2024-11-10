@@ -1,6 +1,10 @@
 from typing import Literal, List
+import numpy as np
+import pandas as pd
 import streamlit as st
 
+from autoop.core.ml.dataset import Dataset
+from autoop.core.ml.feature import Feature
 from autoop.core.ml.model import (
     get_model,
     CLASSIFICATION_MODELS,
@@ -13,6 +17,7 @@ from autoop.core.ml.metric import (
     REGRESSION_METRICS,
     Metric,
 )
+from autoop.functional.preprocessing import preprocess_features
 
 
 def select_model(type: Literal["categorical", "numerical"]) -> Model:
@@ -84,3 +89,54 @@ def select_split() -> int:
     )
 
     return split
+
+def write_metric_results(metric_results: List[tuple[Metric, float]]) -> None:
+    """
+    Write the metric results.
+
+    Args:
+        metric_results (List[tuple[Metric, float]]): The metric results.
+    """
+    for metric, result in metric_results:
+        st.write(f"{metric.__class__.__name__}: {result}")
+
+def write_predictions(predictions: List[float], features: List[Feature], dataset: Dataset, split: float) -> None:
+    """
+    Write the predictions.
+
+    Args:
+        predictions (List[float]): The predictions.
+        features (List[Feature]): The features.
+        dataset (Dataset): The dataset.
+        split (float): The split percentage.
+    """
+    st.write("## Predictions")
+    input_variables = preprocess_input(features, dataset, split)
+
+    predictions_df = pd.DataFrame(
+        input_variables, columns=[f.name for f in features]
+    )
+    predictions_df["Predictions"] = predictions
+    st.write(predictions_df)
+    
+def preprocess_input(features: List[Feature], dataset: Dataset, split: float) -> np.ndarray:
+    """
+    Preprocess the features.
+
+    Args:
+        features (List[Feature]): The features.
+        dataset (Dataset): The dataset.
+        split (float): The split percentage.
+
+    Returns:
+        np.ndarray: The preprocessed features.
+    """
+    input_results = preprocess_features(features, dataset)
+    input_data = [data for (feature_name, data, artifact) in input_results]
+
+    input_test_X = [
+        vector[int(split * len(vector)) :]
+        for vector in input_data
+    ]
+
+    return np.concatenate(input_test_X, axis=1)

@@ -9,6 +9,8 @@ from app.core.modelling.pipeline import (
     select_model,
     select_metric,
     select_split,
+    write_metric_results,
+    write_predictions,
 )
 from autoop.core.ml.pipeline import Pipeline
 from autoop.functional.preprocessing import preprocess_features
@@ -19,6 +21,12 @@ st.set_page_config(page_title="Modelling", page_icon="📈")
 
 
 def write_helper_text(text: str):
+    """
+    Write a helper text in the app.
+    
+    Args:
+        text (str): The text to be displayed.
+    """
     st.write(f'<p style="color: #888;">{text}</p>', unsafe_allow_html=True)
 
 
@@ -39,7 +47,7 @@ if selected_dataset:
 
     split = select_split()
 
-st.write(f"## Pipeline Configuration")
+st.title("Pipeline Configuration")
 
 st.write(f"**Dataset**: {selected_dataset.name}")
 st.write(f"**Model**: {model.__name__}")
@@ -48,13 +56,14 @@ st.write(f"**Target Feature**: {target_feature.name}")
 st.write(f"**Split**: {split}%")
 st.write(f"**Metrics**: {', '.join([x.__name__ for x in metrics])}")
 
-st.write(f"## Results")
+st.write("## Results")
 
 if "pipeline" not in st.session_state:
     st.session_state.pipeline = None
 
 try:
     if st.button("Run Pipeline"):
+        # Create a pipeline with the selected configuration
         st.session_state.pipeline = Pipeline(
             dataset=selected_dataset,
             model=model(),
@@ -63,55 +72,28 @@ try:
             metrics=list(metric() for metric in metrics),
             split=split / 100,
         )
+
         results = st.session_state.pipeline.execute()
         labels = results["labels"]
-        if labels is not None:
-            st.write(f"Classes: {", ".join(labels)}")  # noqa: E999
-
-        st.write(
-            f"**Model Parameters**:{st.session_state.pipeline.model.parameters}"
-        )
         eval_results = results["metrics_on_evaluation_set"]
         train_results = results["metrics_on_training_set"]
+        predictions = results["predictions"]
 
-        eval_results_strings = [
-            f"{eval_results[i][0].__class__.__name__}:{eval_results[i][1]}"
-            for i in range(len(eval_results))
-        ]
-
-        train_results_strings = [
-            f"{train_results[i][0].__class__.__name__}: {train_results[i][1]}"
-            for i in range(len(train_results))
-        ]
-        st.write(
-            f"**Metrics on evaluation set**:  \n"
-            f"{"  \n".join(eval_results_strings)}"
-        )
-        st.write(
-            f"**Metrics on training set**:  \n"
-            f"{"  \n".join(train_results_strings)}"
-        )
-
-        input_results = preprocess_features(input_features, selected_dataset)
-        input_data = [data for (feature_name, data, artifact) in input_results]
-
-        input_test_X = [
-            vector[int((split/100) * len(vector)) :]
-            for vector in input_data
-        ]
-
-        input_X = np.concatenate(input_test_X, axis=1)
-
-        predictions_df = pd.DataFrame(input_X, columns=[f.name for f in input_features])
-        predictions_df["Predictions"] = results["predictions"]
         if labels is not None:
-            predictions_df["Labels"] = [labels[prd] for prd in results["predictions"]]
-        st.write(predictions_df)
+            st.write(f"Classes: {", ".join(labels)}")  # noqa: E999
+            predictions = [labels[prd] for prd in predictions]
 
+        st.write("### Evaluation Set")
+        write_metric_results(eval_results)
 
+        st.write("### Training Set")
+        write_metric_results(train_results)
+
+        write_predictions(predictions, input_features, selected_dataset, split)
+    
 except ValueError as e:
     st.write("Error: please fill all the required fields.")
-    st.write(e)
+    st.write(e.args[0])
 
 try:
     artifact_name = st.text_input("Enter your pipeline name:")
