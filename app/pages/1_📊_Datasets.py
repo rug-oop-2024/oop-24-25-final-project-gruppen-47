@@ -1,8 +1,6 @@
 import streamlit as st
-import pandas as pd
 
 from app.core.system import AutoMLSystem
-from autoop.core.ml.dataset import Dataset
 from app.core.datasets_management import create_dataset
 
 automl = AutoMLSystem.get_instance()

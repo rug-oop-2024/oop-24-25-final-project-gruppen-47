@@ -1,8 +1,6 @@
 import streamlit as st
-import pandas as pd
 
 from app.core.system import AutoMLSystem
-from autoop.core.ml.dataset import Dataset
 from autoop.core.ml.metric import Accuracy, MeanAbsoluteError, MeanSquaredError, Precision, Recall, RootMeanSquaredError
 from autoop.core.ml.model.classification.k_nearest_neighbors import KNearestNeighbors
 from autoop.core.ml.model.classification.random_forest_wrap import RandomForest
@@ -13,6 +11,7 @@ from autoop.core.ml.model.classification.naive_bayes_wrap import NaiveBayesModel
 from app.core.modelling.datasets import pick_dataset, select_features
 from autoop.core.ml.pipeline import Pipeline
 
+automl = AutoMLSystem.get_instance()
 
 st.set_page_config(page_title="Modelling", page_icon="📈")
 
@@ -70,3 +69,16 @@ if run:
     st.write(f"**Metrics on evaluation set**: {results["metrics_on_evaluation_set"]}")
     st.write(f"**Metrics on training set**: {results["metrics_on_training_set"]}")
     st.write(f"**Predictions**: {results["predictions"]}")
+
+
+
+    # artifact_name = st.text_input("Enter your pipleine name:")
+    save = st.button("Save Pipeline")
+    print(save)
+
+    if save:
+        new_artifact = pipeline.to_artifact("jozo")
+        st.write(type(new_artifact))
+        print(type(new_artifact))
+        automl.registry.register(new_artifact)
+        new_artifact.save()

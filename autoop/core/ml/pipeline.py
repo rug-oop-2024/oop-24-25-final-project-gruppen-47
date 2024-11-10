@@ -140,11 +140,28 @@ Pipeline(
         self._train()
         self._evaluate()
         self._evaluate_train_data()
-        if self._target_feature.type == "categorical":
-            labels = pd.unique(self._dataset.read()[self._target_feature.name].values)
+        # if self._target_feature.type == "categorical":
+        #     labels = pd.unique(self._dataset.read()[self._target_feature.name].values)
         return {
             "metrics_on_evaluation_set": self._metrics_results,
             "metrics_on_training_set": self._metrics_train_data_results,
             "predictions": self._predictions,
-            "labels": labels,
+            # "labels": labels if self._target_feature.type == "categorical" else None,
         }
+
+    def to_artifact(self, name: str) -> Artifact:
+        """
+        Convert the pipeline to an artifact.
+        
+        Args:
+            name: str representing the name of the artifact
+        Returns:
+            Artifact: The artifact
+        """
+        data = pickle.dumps(self)
+        return Artifact(
+            name=name, 
+            data=data, 
+            asset_path=f"{name}.pkl", 
+            type="Pipeline"
+        )

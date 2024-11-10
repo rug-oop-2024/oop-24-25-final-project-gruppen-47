@@ -1,7 +1,6 @@
 from typing import Dict, List
-from pydantic import BaseModel, Field, PrivateAttr
+from pydantic import BaseModel, Field
 import base64
-
 
 class Artifact(BaseModel):
     """Description: Base class for all artifacts."""
@@ -16,15 +15,32 @@ class Artifact(BaseModel):
 
     @property
     def id(self) -> str:
-        """Returns the unique identifier for the artifact"""
+        """
+        Returns the unique identifier for the artifact
+        
+        Returns:
+            str: Unique identifier
+        """
         path = base64.b64encode(self.asset_path.encode()).decode()
         return f"{path}:{self.version}"
 
     def read(self) -> bytes:
-        """Reads the artifact"""
+        """
+        Reads the artifact"
+        
+        Returns:
+            bytes: Artifact data
+        """
         return self.data
 
     def save(self, data: bytes) -> bytes:
-        """Saves the artifact"""
-        self._data = data
+        """
+        Saves the artifact
+        
+        Args:
+            data (bytes): Data to save
+        Returns:
+            bytes: Saved data
+        """
+        self.data = data
         return self.data

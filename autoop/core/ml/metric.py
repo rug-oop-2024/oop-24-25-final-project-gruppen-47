@@ -183,6 +183,13 @@ metrics_map: Dict[str, Type] = {
 
 
 def get_metric(name: str) -> Metric:
+    """
+    Get a metric by name.
+    
+    Args:
+        name: Name of the metric.
+    Returns:
+        Metric: Instance of the metric."""
     metric_class = metrics_map.get(name)
     if metric_class:
         return metric_class()
