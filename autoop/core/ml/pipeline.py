@@ -44,7 +44,7 @@ class Pipeline:
         self._split = split
         if (
             target_feature.type == "categorical"
-            and model.type != "classification"
+            and model.type != "classification" # noqa <W503>
         ):
             raise ValueError(
                 "Model type must be classification "
