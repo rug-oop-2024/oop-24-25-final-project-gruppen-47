@@ -1,4 +1,5 @@
 from abc import abstractmethod, ABC
+import pickle
 from autoop.core.ml.artifact import Artifact
 import numpy as np
 from copy import deepcopy
@@ -13,7 +14,8 @@ class Model(ABC):
         _parameters: dictionary representing parameters
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
+        """Initialize the model."""
         self._parameters: dict = {}
         self._type: Literal["regression", "classification"]
 
@@ -92,3 +94,17 @@ class Model(ABC):
         if value not in ["regression", "classification"]:
             raise ValueError(f"Invalid model type: {value}")
         self._type = value
+
+    def to_artifact(self, name: str) -> Artifact:
+        """
+        Convert the pipeline to an artifact.
+
+        Args:
+            name: str representing the name of the artifact
+        Returns:
+            Artifact: The artifact
+        """
+        data = pickle.dumps(self)
+        return Artifact(
+            name=name, data=data, asset_path=f"models/{name}.pkl", type="model"
+        )

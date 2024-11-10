@@ -166,7 +166,7 @@ Pipeline(
             "labels": labels,
         }
 
-    def to_artifact(self, name: str) -> Artifact:
+    def to_artifact(self, name: str, version: str) -> Artifact:
         """
         Convert the pipeline to an artifact.
 
@@ -177,5 +177,5 @@ Pipeline(
         """
         data = pickle.dumps(self)
         return Artifact(
-            name=name, data=data, asset_path=f"{name}.pkl", type="Pipeline"
+            name=name, version=version, data=data, asset_path=f"{name}.pkl", type="pipeline"
         )
