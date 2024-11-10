@@ -29,7 +29,10 @@ class Pipeline:
         self._metrics = metrics
         self._artifacts = {}
         self._split = split
-        if target_feature.type == "categorical" and model.type != "classification":
+        if (
+            target_feature.type == "categorical"
+            and model.type != "classification"
+        ):
             raise ValueError(
                 "Model type must be classification for categorical target feature"
             )
@@ -88,24 +91,34 @@ Pipeline(
             [self._target_feature], self._dataset
         )[0]
         self._register_artifact(target_feature_name, artifact)
-        input_results = preprocess_features(self._input_features, self._dataset)
+        input_results = preprocess_features(
+            self._input_features, self._dataset
+        )
         for feature_name, data, artifact in input_results:
             self._register_artifact(feature_name, artifact)
         # Get the input vectors and output vector, sort by feature name for consistency
         self._output_vector = target_data
-        self._input_vectors = [data for (feature_name, data, artifact) in input_results]
+        self._input_vectors = [
+            data for (feature_name, data, artifact) in input_results
+        ]
 
     def _split_data(self):
         # Split the data into training and testing sets
         split = self._split
         self._train_X = [
-            vector[: int(split * len(vector))] for vector in self._input_vectors
+            vector[: int(split * len(vector))]
+            for vector in self._input_vectors
         ]
         self._test_X = [
-            vector[int(split * len(vector)) :] for vector in self._input_vectors
+            vector[int(split * len(vector)) :]
+            for vector in self._input_vectors
         ]
-        self._train_y = self._output_vector[: int(split * len(self._output_vector))]
-        self._test_y = self._output_vector[int(split * len(self._output_vector)) :]
+        self._train_y = self._output_vector[
+            : int(split * len(self._output_vector))
+        ]
+        self._test_y = self._output_vector[
+            int(split * len(self._output_vector)) :
+        ]
 
     def _compact_vectors(self, vectors: List[np.array]) -> np.array:
         return np.concatenate(vectors, axis=1)
@@ -140,13 +153,17 @@ Pipeline(
         self._train()
         self._evaluate()
         self._evaluate_train_data()
-        # if self._target_feature.type == "categorical":
-        #     labels = pd.unique(self._dataset.read()[self._target_feature.name].values)
+        if self._target_feature.type == "categorical":
+            labels = pd.unique(
+                self._dataset.read()[self._target_feature.name].values
+            )
+        else:
+            labels = None
         return {
             "metrics_on_evaluation_set": self._metrics_results,
             "metrics_on_training_set": self._metrics_train_data_results,
             "predictions": self._predictions,
-            # "labels": labels if self._target_feature.type == "categorical" else None,
+            "labels": labels,
         }
 
     def to_artifact(self, name: str) -> Artifact:
@@ -159,4 +176,6 @@ Pipeline(
             Artifact: The artifact
         """
         data = pickle.dumps(self)
-        return Artifact(name=name, data=data, asset_path=f"{name}.pkl", type="Pipeline")
+        return Artifact(
+            name=name, data=data, asset_path=f"{name}.pkl", type="Pipeline"
+        )

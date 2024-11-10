@@ -37,7 +37,9 @@ class Lasso(Model):
             TypeError: if either arguemnt is not a required type
         """
         if observations.ndim != 2:
-            raise TypeError("First argument should be a 2 dimensional numpy array.")
+            raise TypeError(
+                "First argument should be a 2 dimensional numpy array."
+            )
         if ground_truths.ndim != 1:
             if ground_truths.ndim == 2 and ground_truths.shape[1] == 1:
                 ground_truths = ground_truths.flatten()
@@ -47,7 +49,9 @@ class Lasso(Model):
                 )
         number_of_samples = observations.shape[0]
         if number_of_samples != ground_truths.size:
-            raise ValueError("Number of samples in training data do not match.")
+            raise ValueError(
+                "Number of samples in training data do not match."
+            )
 
         self._lasso.fit(observations, ground_truths)
         self._parameters = self._lasso.get_params()

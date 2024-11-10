@@ -37,7 +37,9 @@ class MultipleLinearRegression(Model):
             TypeError: if either arguemnt is not a required type
         """
         if observations.ndim != 2:
-            raise TypeError("First argument should be a 2 dimensional numpy array.")
+            raise TypeError(
+                "First argument should be a 2 dimensional numpy array."
+            )
         if ground_truths.ndim != 1:
             if ground_truths.ndim == 2 and ground_truths.shape[1] == 1:
                 ground_truths = ground_truths.flatten()
@@ -47,7 +49,9 @@ class MultipleLinearRegression(Model):
                 )
         number_of_samples = observations.shape[0]
         if number_of_samples != ground_truths.size:
-            raise ValueError("Number of samples in training data do not match.")
+            raise ValueError(
+                "Number of samples in training data do not match."
+            )
 
         row_of_ones = np.array([1] * number_of_samples)
         observations_tilde = np.column_stack([observations, row_of_ones])
@@ -80,7 +84,9 @@ class MultipleLinearRegression(Model):
             raise TypeError("Argument should be a 2 dimensional numpy array.")
         number_of_parameters = observations.shape[1]
         if number_of_parameters + 1 != self._parameters["parameters"].size:
-            raise ValueError("Number of samples in training data do not match.")
+            raise ValueError(
+                "Number of samples in training data do not match."
+            )
 
         predictions = [self._predict_single(x) for x in observations]
         return np.array(predictions)

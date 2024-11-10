@@ -66,7 +66,9 @@ class KNearestNeighbors(Model):
         ground_truths = np.argmax(ground_truths, axis=1)
         number_of_samples = observations.shape[0]
         if number_of_samples != ground_truths.size:
-            raise ValueError("Number of samples in training data do not match.")
+            raise ValueError(
+                "Number of samples in training data do not match."
+            )
 
         self._parameters = {
             "k": self._k,
@@ -105,6 +107,8 @@ class KNearestNeighbors(Model):
         )
         sorted_indices = np.argsort(distances)
         k_indices = sorted_indices[: self.k]
-        k_nearest_labels = [self._parameters["ground_truths"][i] for i in k_indices]
+        k_nearest_labels = [
+            self._parameters["ground_truths"][i] for i in k_indices
+        ]
         most_common = Counter(k_nearest_labels).most_common()
         return most_common[0][0]
