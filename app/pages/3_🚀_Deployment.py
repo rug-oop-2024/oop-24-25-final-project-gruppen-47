@@ -18,19 +18,39 @@ pipeline = select_pipeline()
 
 model = pickle.loads(pipeline.data).model
 
+if model.type == "classification":
+    labels = pickle.loads(pipeline.data).labels
+else:
+    labels = None
+
 write_summary(pipeline, model)
 
 predictions_csv = st.file_uploader(
     "**Upload a CSV file for predictions:**", type="csv"
 )
-create_dataset(predictions_csv)
-selected_dataset = pick_dataset()
-input_features = select_features(selected_dataset, False)[0]
+try:
+    create_dataset(predictions_csv)
+    selected_dataset = pick_dataset()
+    input_features = select_features(selected_dataset, False)[0]
 
-input_results = preprocess_features(input_features, selected_dataset)
-input_data = [data for (feature_name, data, artifact) in input_results]
+    input_results = preprocess_features(input_features, selected_dataset)
+    input_data = [data for (feature_name, data, artifact) in input_results]
 
-input_X = np.concatenate(input_data, axis=1)
+    input_X = np.concatenate(input_data, axis=1)
 
-predictions = model.predict(input_X)
-st.write(predictions)
+    predictions = model.predict(input_X)
+    if labels is not None:
+        st.write(
+            f"**Predictions**: "
+            f"{", ".join([labels[prd] for prd in predictions])}"
+        )
+    else:
+        st.write(
+            f"**Predictions**: {predictions}"
+        )
+except ValueError as e:
+    # st.write("Please upload a CSV file for predictions.")
+    st.write(e.args[0])
+except KeyboardInterrupt:
+    pass
+

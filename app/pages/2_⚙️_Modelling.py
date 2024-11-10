@@ -62,8 +62,8 @@ try:
         )
         results = st.session_state.pipeline.execute()
         labels = results["labels"]
-        if labels:
-            st.write(f"Classes: {labels}")
+        if labels is not None:
+            st.write(f"Classes: {", ".join(labels)}")
 
         st.write(
             f"**Model Parameters**:{st.session_state.pipeline.model.parameters}"
@@ -72,31 +72,40 @@ try:
         train_results = results["metrics_on_training_set"]
 
         eval_results_strings = [
-            f"{eval_results[i][0].__class__.__name__}:{eval_results[i][1]}\n"
+            f"{eval_results[i][0].__class__.__name__}:{eval_results[i][1]}"
             for i in range(len(eval_results))
         ]
 
         train_results_strings = [
-            f"{train_results[i][0].__class__.__name__}:{train_results[i][1]}\n"
+            f"{train_results[i][0].__class__.__name__}: {train_results[i][1]}"
             for i in range(len(train_results))
         ]
-        st.write(f"**Metrics on evaluation set**: \n{eval_results_strings}")
-        st.write(f"**Metrics on training set**: \n{train_results_strings}")
+        st.write(
+            f"**Metrics on evaluation set**:  \n"
+            f"{"  \n".join(eval_results_strings)}"
+        )
+        st.write(
+            f"**Metrics on training set**:  \n"
+            f"{"  \n".join(train_results_strings)}"
+        )
 
-        if labels:
+        if labels is not None:
             st.write(
                 f"**Predictions**: "
-                f"{[labels[pred] for pred in results["predictions"]]}"
+                f"{", ".join([labels[prd] for prd in results["predictions"]])}"
             )
         else:
-            st.write(f"**Predictions**: {results["predictions"]}")
+            st.write(
+                f"**Predictions**: {results["predictions"]}"
+            )
 
-except ValueError:
+except ValueError as e:
     st.write("Error: please fill all the required fields.")
+    st.write(e.args[0])
 
 try:
-    artifact_name = st.text_input("Enter your pipleine name:")
-    artifact_version = st.text_input("Enter your pipleine version:")
+    artifact_name = st.text_input("Enter your pipeline name:")
+    artifact_version = st.text_input("Enter your pipeline version:")
 
     if st.button("Save Pipeline"):
         assert artifact_name != "", st.write("Field Name cannot be empty.")
