@@ -95,11 +95,11 @@ E.g. docs/decisions/DSC-0001-use-typescript.md
 Some examples include housing prices, second-hand cars, etc.
 
 ### Checklist
-- [ ] I have read the instructions carefully.
-- [ ] I have filled my personal rubric.
-- [ ] The code is refactored to style standards.
-- [ ] I have passed my tests.
-- [ ] I have documented my code and decisions.
+- [x] I have read the instructions carefully.
+- [x] I have filled my personal rubric.
+- [x] The code is refactored to style standards.
+- [x] I have passed my tests.
+- [x] I have documented my code and decisions.
 
 # Grading & Submission (IMPORTANT)
 
