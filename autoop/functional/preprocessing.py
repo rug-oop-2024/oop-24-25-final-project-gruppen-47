@@ -1,7 +1,6 @@
 from typing import List, Tuple
 from autoop.core.ml.feature import Feature
 from autoop.core.ml.dataset import Dataset
-import pandas as pd
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
@@ -14,7 +13,8 @@ def preprocess_features(
         features (List[Feature]): List of features.
         dataset (Dataset): Dataset object.
     Returns:
-        List[str, Tuple[np.ndarray, dict]]: List of preprocessed features. Each ndarray of shape (N, ...)
+        List[str, Tuple[np.ndarray, dict]]: List of preprocessed features. 
+            Each ndarray of shape (N, ...)
     """
     results = []
     raw = dataset.read()

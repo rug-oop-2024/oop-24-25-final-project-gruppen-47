@@ -10,11 +10,13 @@ class Lasso(Model):
     Class representing a Lasso model.
 
     Attributes:
-        _parameters: dictionary representing parameters
-        lasso: SklearnLasso object representing the Lasso model
+        _parameters (dict): dictionary representing parameters
+        _lasso (SklearnLasso): SklearnLasso object representing the Lasso model
+        _type (str): string representing the type of model
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
+        """Initialize the Lasso model."""
         super().__init__()
         self._lasso: SklearnLasso = SklearnLasso()
         self._type = "regression"

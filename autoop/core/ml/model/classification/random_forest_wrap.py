@@ -10,11 +10,14 @@ class RandomForest(Model):
     Class representing a Lasso model.
 
     Attributes:
-        _parameters: dictionary representing parameters
-        lasso: SklearnLasso object representing the Lasso model
+        _parameters (dict): dictionary representing parameters
+        _random_forest (SKlearnRandomForest): SklearnRandomForest object
+            representing the Random Forest model
+        _type (str): string representing the type of model
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
+        """Initialize the Random Forest model."""
         super().__init__()
         self._random_forest: SKlearnRandomForest = SKlearnRandomForest()
         self._type = "classification"

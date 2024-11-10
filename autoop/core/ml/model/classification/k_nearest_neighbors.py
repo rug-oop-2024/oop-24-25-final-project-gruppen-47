@@ -11,12 +11,20 @@ class KNearestNeighbors(Model):
     Class representing a K-Nearest Neighbors model.
 
     Attributes:
-        k: int representing the number of neighbors
+        k (int): int representing the number of neighbors
             to consider when making a prediction
-        _parameters: dictionary representing parameters
+        _parameters (dict): dictionary representing parameters
+        _type (str): type of the model
     """
 
-    def __init__(self, k: int = 3):
+    def __init__(self, k: int = 3) -> None:
+        """
+        Initialize the K-Nearest Neighbors model.
+        
+        Args:
+            k: int representing the number of neighbors to consider
+                when making a prediction
+        """
         super().__init__()
         self.k = k  # noqa <VNE001>
         self._type = "classification"
@@ -92,7 +100,7 @@ class KNearestNeighbors(Model):
         predictions = [self._predict_single(x) for x in observations]
         return np.array(predictions)
 
-    def _predict_single(self, observation: np.ndarray) -> Any:
+    def _predict_single(self, observation: np.ndarray) -> list[tuple[Any, int]]:
         """
         Make a prediction for a single observation.
 

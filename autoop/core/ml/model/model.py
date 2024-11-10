@@ -1,5 +1,4 @@
 from abc import abstractmethod, ABC
-from autoop.core.ml.artifact import Artifact
 import numpy as np
 from copy import deepcopy
 from typing import Literal
@@ -11,9 +10,11 @@ class Model(ABC):
 
     Attributes:
         _parameters: dictionary representing parameters
+        _type: type of the model
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
+        """Initialize the model."""
         self._parameters: dict = {}
         self._type: Literal["regression", "classification"]
 

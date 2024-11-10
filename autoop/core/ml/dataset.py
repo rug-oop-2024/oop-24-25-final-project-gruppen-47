@@ -7,6 +7,13 @@ class Dataset(Artifact):
     """Dataset"""
 
     def __init__(self, *args, **kwargs) -> None:
+        """
+        Initialize the dataset artifact.
+        
+        Args:
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+        """
         super().__init__(type="dataset", *args, **kwargs)
 
     @staticmethod
@@ -20,7 +27,8 @@ class Dataset(Artifact):
             data (pd.DataFrame): DataFrame
             name (str): Name of the dataset
             asset_path (str): Path to the dataset asset
-            version (str, optional): Version of the dataset. Defaults to "1.0.0"
+            version (str, optional): Version of the dataset. 
+                Defaults to "1.0.0"
 
         Returns:
             Dataset: Dataset artifact

@@ -7,7 +7,13 @@ from glob import glob
 class NotFoundError(Exception):
     """Exception raised when a path is not found"""
 
-    def __init__(self, path) -> None:
+    def __init__(self, path: str) -> None:
+        """
+        Initialize the exception
+        
+        Args:
+            path: Path that was not found
+        """
         super().__init__(f"Path not found: {path}")
 
 
@@ -15,7 +21,7 @@ class Storage(ABC):
     """Storage"""
 
     @abstractmethod
-    def save(self, data: bytes, path: str):
+    def save(self, data: bytes, path: str) -> None:
         """
         Save data to a given path
         Args:
@@ -36,7 +42,7 @@ class Storage(ABC):
         pass
 
     @abstractmethod
-    def delete(self, path: str):
+    def delete(self, path: str) -> None:
         """
         Delete data at a given path
         Args:
@@ -60,6 +66,12 @@ class LocalStorage(Storage):
     """LocalStorage"""
 
     def __init__(self, base_path: str = "./assets") -> None:
+        """
+        Initialize the local storage
+        
+        Args:
+            base_path (str): Base path to store data
+        """
         self._base_path = base_path
         if not os.path.exists(self._base_path):
             os.makedirs(self._base_path)
