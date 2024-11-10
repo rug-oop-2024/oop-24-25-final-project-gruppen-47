@@ -185,7 +185,7 @@ metrics_map: Dict[str, Type] = {
 def get_metric(name: str) -> Metric:
     """
     Get a metric by name.
-    
+
     Args:
         name: Name of the metric.
     Returns:

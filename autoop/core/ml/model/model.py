@@ -1,10 +1,10 @@
-
 from abc import abstractmethod, ABC
 from autoop.core.ml.artifact import Artifact
 import numpy as np
 from copy import deepcopy
 from typing import Literal
-    
+
+
 class Model(ABC):
     """
     Class represenintg a machine learning model.
@@ -68,7 +68,7 @@ class Model(ABC):
             Deep copy of parameters
         """
         return deepcopy(self._parameters)
-    
+
     @property
     def type(self) -> str:
         """
@@ -78,7 +78,7 @@ class Model(ABC):
             Type of model
         """
         return self._type
-    
+
     @type.setter
     def type(self, value: Literal["regression", "classification"]) -> None:
         """

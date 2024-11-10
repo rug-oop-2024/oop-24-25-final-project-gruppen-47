@@ -1,10 +1,19 @@
 import streamlit as st
 
 from app.core.system import AutoMLSystem
-from autoop.core.ml.metric import Accuracy, MeanAbsoluteError, MeanSquaredError, Precision, Recall, RootMeanSquaredError
+from autoop.core.ml.metric import (
+    Accuracy,
+    MeanAbsoluteError,
+    MeanSquaredError,
+    Precision,
+    Recall,
+    RootMeanSquaredError,
+)
 from autoop.core.ml.model.classification.k_nearest_neighbors import KNearestNeighbors
 from autoop.core.ml.model.classification.random_forest_wrap import RandomForest
-from autoop.core.ml.model.regression.multiple_linear_regression import MultipleLinearRegression
+from autoop.core.ml.model.regression.multiple_linear_regression import (
+    MultipleLinearRegression,
+)
 from autoop.core.ml.model.regression.ridge_wrap import Ridge
 from autoop.core.ml.model.regression.lasso_wrap import Lasso
 from autoop.core.ml.model.classification.naive_bayes_wrap import NaiveBayesModel
@@ -31,16 +40,36 @@ input_features, target_feature = select_features(selected_dataset)
 
 
 if target_feature.type == "categorical":
-    st.write("Based on the selected input features, you have to use classification models.")
-    model = st.selectbox("Please select a model.", [KNearestNeighbors, NaiveBayesModel, RandomForest], format_func=lambda model: model.__name__)
-    metrics = st.multiselect("Please select the metrics to evaluate the model.", [Accuracy, Precision, Recall], format_func=lambda metric: metric.__name__)
+    st.write(
+        "Based on the selected input features, you have to use classification models."
+    )
+    model = st.selectbox(
+        "Please select a model.",
+        [KNearestNeighbors, NaiveBayesModel, RandomForest],
+        format_func=lambda model: model.__name__,
+    )
+    metrics = st.multiselect(
+        "Please select the metrics to evaluate the model.",
+        [Accuracy, Precision, Recall],
+        format_func=lambda metric: metric.__name__,
+    )
 else:
-    model = st.selectbox("Please select a model.", [Lasso, Ridge, MultipleLinearRegression], format_func=lambda model: model.__name__)
-    metrics = st.multiselect("Please select the metrics to evaluate the model.", [MeanSquaredError, MeanAbsoluteError, RootMeanSquaredError], format_func=lambda metric: metric.__name__)
+    model = st.selectbox(
+        "Please select a model.",
+        [Lasso, Ridge, MultipleLinearRegression],
+        format_func=lambda model: model.__name__,
+    )
+    metrics = st.multiselect(
+        "Please select the metrics to evaluate the model.",
+        [MeanSquaredError, MeanAbsoluteError, RootMeanSquaredError],
+        format_func=lambda metric: metric.__name__,
+    )
 
 # TODO change metrics to have attribute categorical or numerical
 
-split = st.slider("Please select the percentage of the dataset that will go for training.", 0, 100, 50)
+split = st.slider(
+    "Please select the percentage of the dataset that will go for training.", 0, 100, 50
+)
 
 st.write(f"## Pipeline Configuration")
 
@@ -62,15 +91,13 @@ if run:
         input_features=input_features,
         target_feature=target_feature,
         metrics=list(metric() for metric in metrics),
-        split=split/100
+        split=split / 100,
     )
     results = pipeline.execute()
     st.write(f"**Model Parameters**: {pipeline.model.parameters}")
     st.write(f"**Metrics on evaluation set**: {results["metrics_on_evaluation_set"]}")
     st.write(f"**Metrics on training set**: {results["metrics_on_training_set"]}")
     st.write(f"**Predictions**: {results["predictions"]}")
-
-
 
     # artifact_name = st.text_input("Enter your pipleine name:")
     save = st.button("Save Pipeline")

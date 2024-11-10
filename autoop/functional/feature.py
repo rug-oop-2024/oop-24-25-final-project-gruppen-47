@@ -2,6 +2,7 @@ from typing import List
 from autoop.core.ml.dataset import Dataset
 from autoop.core.ml.feature import Feature
 
+
 def detect_feature_types(dataset: Dataset) -> List[Feature]:
     """Assumption: only categorical and numerical features and no NaN values.
     Args:
@@ -19,4 +20,3 @@ def detect_feature_types(dataset: Dataset) -> List[Feature]:
             features.append(Feature(name=column, type="numerical"))
 
     return features
-

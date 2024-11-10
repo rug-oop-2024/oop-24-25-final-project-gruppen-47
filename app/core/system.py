@@ -15,7 +15,7 @@ class ArtifactRegistry:
     def register(self, artifact: Artifact) -> None:
         """
         Register an artifact in the registry.
-        
+
         Args:
             artifact (Artifact): Artifact to register.
         """
@@ -35,10 +35,10 @@ class ArtifactRegistry:
     def list(self, type: str = None) -> List[Artifact]:
         """
         List all artifacts in the registry.
-        
+
         Args:
             type (str): Type of artifact to list. Defaults to None.
-            
+
         Returns:
             List[Artifact]: List of artifacts.
         """
@@ -62,10 +62,10 @@ class ArtifactRegistry:
     def get(self, artifact_id: str) -> Artifact:
         """
         Get an artifact from the registry.
-        
+
         Args:
             artifact_id (str): Artifact ID.
-            
+
         Returns:
             Artifact: Artifact object.
         """
@@ -83,7 +83,7 @@ class ArtifactRegistry:
     def delete(self, artifact_id: str):
         """
         Delete an artifact from the registry.
-        
+
         Args:
             artifact_id (str): Artifact ID.
         """

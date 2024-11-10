@@ -35,7 +35,7 @@ class Dataset(Artifact):
     def read(self) -> pd.DataFrame:
         """
         Reads the dataset from the artifact
-        
+
         Returns:
             pd.DataFrame: Dataset
         """
@@ -46,7 +46,7 @@ class Dataset(Artifact):
     def save(self, data: pd.DataFrame) -> bytes:
         """
         Saves the dataset to the artifact
-        
+
         Args:
             data (pd.DataFrame): Data to save
         Returns:

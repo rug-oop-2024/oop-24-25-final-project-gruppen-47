@@ -13,6 +13,7 @@ class NaiveBayesModel(Model):
         _parameters: dictionary representing parameters
         lasso: SklearnLasso object representing the Lasso model
     """
+
     def __init__(self):
         super().__init__()
         self._naive_bayes_gaussian = SKLearnGaussianNB()
@@ -38,9 +39,7 @@ class NaiveBayesModel(Model):
         ground_truths = np.argmax(ground_truths, axis=1)
         number_of_samples = observations.shape[0]
         if number_of_samples != ground_truths.size:
-            raise ValueError(
-                "Number of samples in training data do not match."
-            )
+            raise ValueError("Number of samples in training data do not match")
 
         self._naive_bayes_gaussian.fit(observations, ground_truths)
         self._parameters = self._naive_bayes_gaussian.get_params()

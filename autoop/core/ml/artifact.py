@@ -2,6 +2,7 @@ from typing import Dict, List
 from pydantic import BaseModel, Field
 import base64
 
+
 class Artifact(BaseModel):
     """Description: Base class for all artifacts."""
 
@@ -17,7 +18,7 @@ class Artifact(BaseModel):
     def id(self) -> str:
         """
         Returns the unique identifier for the artifact
-        
+
         Returns:
             str: Unique identifier
         """
@@ -27,7 +28,7 @@ class Artifact(BaseModel):
     def read(self) -> bytes:
         """
         Reads the artifact"
-        
+
         Returns:
             bytes: Artifact data
         """
@@ -36,7 +37,7 @@ class Artifact(BaseModel):
     def save(self, data: bytes) -> bytes:
         """
         Saves the artifact
-        
+
         Args:
             data (bytes): Data to save
         Returns:
