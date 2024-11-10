@@ -29,6 +29,21 @@ write_summary(pipeline, model)
 predictions_csv = st.file_uploader(
     "**Upload a CSV file for predictions:**", type="csv"
 )
+
+
+def convert_df_to_csv(df: pd.DataFrame) -> bytes:
+    """
+    Convert a DataFrame to a CSV file.
+
+    Args:
+        df (pd.DataFrame): The DataFrame.
+
+    Returns:
+        bytes: The CSV file.
+    """
+    return df.to_csv(index=False).encode("utf-8")
+
+
 try:
     create_dataset(predictions_csv)
     selected_dataset = pick_dataset()
@@ -41,11 +56,10 @@ try:
 
     predictions = model.predict(input_X)
 
-    def convert_df_to_csv(df):
-        return df.to_csv(index=False).encode('utf-8')
-
     if st.button("Show predictions"):
-        predictions_df = pd.DataFrame(input_X, columns=[f.name for f in input_features])
+        predictions_df = pd.DataFrame(
+            input_X, columns=[f.name for f in input_features]
+        )
         predictions_df["Predictions"] = predictions
         if labels is not None:
             predictions_df["Labels"] = [labels[prd] for prd in predictions]
@@ -57,7 +71,7 @@ try:
             file_name="predictions.csv",
             mime="text/csv",
         )
-        
+
 except ValueError as e:
     # st.write("Please upload a CSV file for predictions.")
     st.write(e.args[0])
