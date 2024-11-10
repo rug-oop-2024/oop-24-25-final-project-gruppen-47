@@ -177,5 +177,9 @@ Pipeline(
         """
         data = pickle.dumps(self)
         return Artifact(
-            name=name, version=version, data=data, asset_path=f"{name}.pkl", type="pipeline"
+            name=name,
+            version=version,
+            data=data,
+            asset_path=f"{name}.pkl",
+            type="pipeline",
         )

@@ -89,7 +89,7 @@ st.write(f"**Metrics**: {', '.join([x.__name__ for x in metrics])}")
 
 st.write(f"## Results")
 
-if 'pipeline' not in st.session_state:
+if "pipeline" not in st.session_state:
     st.session_state.pipeline = None
 
 try:
@@ -103,9 +103,15 @@ try:
             split=split / 100,
         )
         results = st.session_state.pipeline.execute()
-        st.write(f"**Model Parameters**: {st.session_state.pipeline.model.parameters}")
-        st.write(f"**Metrics on evaluation set**: {results["metrics_on_evaluation_set"]}")
-        st.write(f"**Metrics on training set**: {results["metrics_on_training_set"]}")
+        st.write(
+            f"**Model Parameters**: {st.session_state.pipeline.model.parameters}"
+        )
+        st.write(
+            f"**Metrics on evaluation set**: {results["metrics_on_evaluation_set"]}"
+        )
+        st.write(
+            f"**Metrics on training set**: {results["metrics_on_training_set"]}"
+        )
         st.write(f"**Predictions**: {results["predictions"]}")
 except ValueError:
     st.write("Error: please fill all the required fields.")
@@ -116,8 +122,12 @@ try:
 
     if st.button("Save Pipeline"):
         assert artifact_name != "", st.write("Field Name cannot be empty.")
-        assert artifact_version != "", st.write("Field Version cannot be empty.")
-        new_artifact = st.session_state.pipeline.to_artifact(artifact_name, artifact_version)
+        assert artifact_version != "", st.write(
+            "Field Version cannot be empty."
+        )
+        new_artifact = st.session_state.pipeline.to_artifact(
+            artifact_name, artifact_version
+        )
         automl.registry.register(new_artifact)
 except AttributeError:
     st.write("Error: please run the pipeline first.")
