@@ -1,27 +1,9 @@
 import streamlit as st
 
 from app.core.system import AutoMLSystem
-from autoop.core.ml.metric import (
-    Accuracy,
-    MeanAbsoluteError,
-    MeanSquaredError,
-    Precision,
-    Recall,
-    RootMeanSquaredError,
-)
-from autoop.core.ml.model.classification.k_nearest_neighbors import (
-    KNearestNeighbors,
-)
-from autoop.core.ml.model.classification.random_forest_wrap import RandomForest
-from autoop.core.ml.model.regression.multiple_linear_regression import (
-    MultipleLinearRegression,
-)
-from autoop.core.ml.model.regression.ridge_wrap import Ridge
-from autoop.core.ml.model.regression.lasso_wrap import Lasso
-from autoop.core.ml.model.classification.naive_bayes_wrap import (
-    NaiveBayesModel,
-)
+
 from app.core.modelling.datasets import pick_dataset, select_features
+from app.core.modelling.pipeline import select_model, select_metric
 from autoop.core.ml.pipeline import Pipeline
 
 automl = AutoMLSystem.get_instance()
@@ -42,34 +24,9 @@ selected_dataset = pick_dataset()
 
 input_features, target_feature = select_features(selected_dataset)
 
+model = select_model(target_feature.type)
 
-if target_feature.type == "categorical":
-    st.write(
-        "Based on the selected input features, you have to use classification models."
-    )
-    model = st.selectbox(
-        "Please select a model.",
-        [KNearestNeighbors, NaiveBayesModel, RandomForest],
-        format_func=lambda model: model.__name__,
-    )
-    metrics = st.multiselect(
-        "Please select the metrics to evaluate the model.",
-        [Accuracy, Precision, Recall],
-        format_func=lambda metric: metric.__name__,
-    )
-else:
-    model = st.selectbox(
-        "Please select a model.",
-        [Lasso, Ridge, MultipleLinearRegression],
-        format_func=lambda model: model.__name__,
-    )
-    metrics = st.multiselect(
-        "Please select the metrics to evaluate the model.",
-        [MeanSquaredError, MeanAbsoluteError, RootMeanSquaredError],
-        format_func=lambda metric: metric.__name__,
-    )
-
-# TODO change metrics to have attribute categorical or numerical
+metrics = select_metric(target_feature.type)
 
 split = st.slider(
     "Please select the percentage of the dataset that will go for training.",

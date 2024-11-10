@@ -1,6 +1,6 @@
 import pickle
 import streamlit as st
-from app.core.datasets_management import create_dataset
+from app.core.datasets.management import create_dataset
 from app.core.modelling.datasets import (
     artifact_to_dataset,
     pick_dataset,

@@ -1,7 +1,7 @@
 import streamlit as st
 
 from app.core.system import AutoMLSystem
-from app.core.datasets_management import create_dataset
+from app.core.datasets.management import create_dataset
 
 automl = AutoMLSystem.get_instance()
 

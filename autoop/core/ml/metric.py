@@ -3,14 +3,15 @@ from typing import Dict, List, Type
 import numpy as np
 
 
-METRICS = [
-    "accuracy",
-    "precision",
-    "recall",
-    "f1_score",
-    "mean_squared_error",
-    "mean_absolute_error",
-    "root_mean_squared_error",
+CLASSIFICATION_METRICS = [
+    "Accuracy",
+    "Precision",
+    "Recall",
+]
+REGRESSION_METRICS = [
+    "Mean squared error",
+    "Mean absolute error",
+    "Root mean squared error",
 ]
 
 
@@ -172,16 +173,6 @@ class RootMeanSquaredError(Metric):
         return np.sqrt(np.mean((np.array(true) - np.array(pred)) ** 2))
 
 
-metrics_map: Dict[str, Type] = {
-    "accuracy": Accuracy,
-    "precision": Precision,
-    "recall": Recall,
-    "mean_squared_error": MeanSquaredError,
-    "mean_absolute_error": MeanAbsoluteError,
-    "root_mean_squared_error": RootMeanSquaredError,
-}
-
-
 def get_metric(name: str) -> Metric:
     """
     Get a metric by name.
@@ -190,8 +181,17 @@ def get_metric(name: str) -> Metric:
         name: Name of the metric.
     Returns:
         Metric: Instance of the metric."""
-    metric_class = metrics_map.get(name)
-    if metric_class:
-        return metric_class()
-    else:
-        raise ValueError(f"Unknown metric name: {name}")
+
+    metrics_map: Dict[str, Type] = {
+        "Accuracy": Accuracy,
+        "Precision": Precision,
+        "Recall": Recall,
+        "Mean squared error": MeanSquaredError,
+        "Mean absolute error": MeanAbsoluteError,
+        "Root mean squared error": RootMeanSquaredError,
+    }
+
+    try:
+        return metrics_map[name]
+    except KeyError:
+        raise ValueError(f"Metric {name} not found.")
