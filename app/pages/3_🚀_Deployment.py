@@ -10,10 +10,12 @@ from app.core.deployment.management import (
 )
 from app.core.datasets.management import create_dataset
 from app.core.modelling.datasets import (
+    artifact_to_dataset,
     pick_dataset,
     select_features,
 )
 from app.core.system import AutoMLSystem
+from autoop.core.ml.dataset import Dataset
 
 
 automl = AutoMLSystem.get_instance()
@@ -33,10 +35,14 @@ predictions_csv = st.file_uploader(
     "**Upload a CSV file for predictions:**", type="csv"
 )
 
+name_csv = predictions_csv.name if predictions_csv else None
+data_csv = pd.read_csv(predictions_csv) if predictions_csv else None
+
 try:
-    # Create a dataset from the uploaded CSV file
-    create_dataset(predictions_csv)
-    selected_dataset = pick_dataset()
+    # Create a dataset from the uploaded CSV file and select features
+    selected_dataset = Dataset.from_dataframe(
+        data_csv, name_csv, f"{name_csv}.csv"
+    )
     input_features = select_features(selected_dataset, False)[0]
 
     # Get the input variables and predictions to display
