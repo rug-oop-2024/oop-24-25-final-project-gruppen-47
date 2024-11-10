@@ -25,7 +25,7 @@ create_dataset(predictions_csv)
 selected_dataset = pick_dataset()
 input_features = select_features(selected_dataset, False)[0]
 
-predictions = model.predict(predictions_csv)
+predictions = model.predict(input_features)
 st.write(predictions)
 st.write("Download the predictions.")
 st.download_button(
