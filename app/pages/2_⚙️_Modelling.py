@@ -1,5 +1,3 @@
-import numpy as np
-import pandas as pd
 import streamlit as st
 
 from app.core.system import AutoMLSystem
@@ -14,7 +12,6 @@ from app.core.modelling.pipeline import (
     write_predictions,
 )
 from autoop.core.ml.pipeline import Pipeline
-from autoop.functional.preprocessing import preprocess_features
 
 automl = AutoMLSystem.get_instance()
 
