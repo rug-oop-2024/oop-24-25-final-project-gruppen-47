@@ -21,7 +21,8 @@ def write_helper_text(text: str):
 
 st.write("# ⚙ Modelling")
 write_helper_text(
-    "In this section, you can design a machine learning pipeline to train a model on a dataset."
+    "In this section, you can design a machine learning pipeline to train"
+    "a model on a dataset."
 )
 
 selected_dataset = pick_dataset()
@@ -60,17 +61,36 @@ try:
             split=split / 100,
         )
         results = st.session_state.pipeline.execute()
-        st.write(f"{results["labels"]}")
+        labels = results["labels"]
+        if labels:
+            st.write(f"Classes: {labels}")
+
         st.write(
-            f"**Model Parameters**: {st.session_state.pipeline.model.parameters}"
+            f"**Model Parameters**:{st.session_state.pipeline.model.parameters}"
         )
-        st.write(
-            f"**Metrics on evaluation set**: {results["metrics_on_evaluation_set"]}"
-        )
-        st.write(
-            f"**Metrics on training set**: {results["metrics_on_training_set"]}"
-        )
-        st.write(f"**Predictions**: {results["predictions"]}")
+        eval_results = results["metrics_on_evaluation_set"]
+        train_results = results["metrics_on_training_set"]
+
+        eval_results_strings = [
+            f"{eval_results[i][0].__class__.__name__}:{eval_results[i][1]}\n"
+            for i in range(len(eval_results))
+        ]
+
+        train_results_strings = [
+            f"{train_results[i][0].__class__.__name__}:{train_results[i][1]}\n"
+            for i in range(len(train_results))
+        ]
+        st.write(f"**Metrics on evaluation set**: \n{eval_results_strings}")
+        st.write(f"**Metrics on training set**: \n{train_results_strings}")
+
+        if labels:
+            st.write(
+                f"**Predictions**: "
+                f"{[labels[pred] for pred in results["predictions"]]}"
+            )
+        else:
+            st.write(f"**Predictions**: {results["predictions"]}")
+
 except ValueError:
     st.write("Error: please fill all the required fields.")
 
