@@ -153,30 +153,30 @@ If you did not implement the feature
 
 | Requirement                           | Type (FN/NF) | Implemented by       | Implementation Completed (add X if done) | Comment |
 |-------------------------------------- |--------------|----------------------|--------------------------|---------|         
-| Up-to-date requirements.txt           | NF           |      both            |   done      | |
-| `ML/detect-features`                  | FN           |     both             |   done      | |
-| `ML/artifact`                         | NF           |    both              |   done      | |
-| `ML/feature`                          | NF           |   both               |   done      | |
-| `ML/metric`                           | NF           |  both                |   done      | |
-| `ML/metric/extensions`                | FN           |           both       |   done      | |
-| `ML/model`                            | NF           |          both        |   done      | |
-| `ML/model/extensions`                 | FN           |         both         |   done      | |
-| `ML/pipeline/evaluation`              | FN           |        both          |   done      | | 
-| `ST/page/datasets`                    | NF           |       both           |   done      | |
-| `ST/datasets/management/create`       | FN           |      both            |   done      | |
-| `ST/datasets/management/save`         | FN           |     both             |   done      | |
-| `ST/page/modelling`                   | NF           |    both              |   done      | |
-| `ST/modelling/datasets/list`          | FN           |           both       |   done      | |
-| `ST/modelling/datasets/features`      | FN           |          both        |   done      | |
-| `ST/modelling/models`                 | FN           |         both         |   done      | |
-| `ST/modelling/pipeline/split`         | FN           |        both          |   done      | |
-| `ST/modelling/pipeline/metrics`       | FN           |        both          |   done      | |
-| `ST/modelling/pipeline/summary`       | FN           |       both           |   done      | |
-| `ST/modelling/pipeline/train`         | FN           |      both            |   done      | |
-| `ST/modelling/pipeline/save`          | FN           |     both             |   done      | |
-| `ST/page/deployment`                  | FN           |    both              |   done      | |
-| `ST/deployment/load`                  | FN           |   both               |   done      | |
-| `ST/deployment/predict`               | FN           |  both                |   done      | |
+| Up-to-date requirements.txt           | NF           |      both            |   X      | | :)
+| `ML/detect-features`                  | FN           |     both             |   X      | | :)
+| `ML/artifact`                         | NF           |    both              |   X      | | :)
+| `ML/feature`                          | NF           |   both               |   X      | | :)
+| `ML/metric`                           | NF           |  both                |   X      | | :)
+| `ML/metric/extensions`                | FN           |           both       |   X      | | :)
+| `ML/model`                            | NF           |          both        |   X      | | :)
+| `ML/model/extensions`                 | FN           |         both         |   X      | | :)
+| `ML/pipeline/evaluation`              | FN           |        both          |   X      | |  :)
+| `ST/page/datasets`                    | NF           |       both           |   X      | | :)
+| `ST/datasets/management/create`       | FN           |      both            |   X      | | :)
+| `ST/datasets/management/save`         | FN           |     both             |   X      | | :)
+| `ST/page/modelling`                   | NF           |    both              |   X      | | :)
+| `ST/modelling/datasets/list`          | FN           |           both       |   X      | | :)
+| `ST/modelling/datasets/features`      | FN           |          both        |   X      | | :)
+| `ST/modelling/models`                 | FN           |         both         |   X      | | :)
+| `ST/modelling/pipeline/split`         | FN           |        both          |   X      | | :)
+| `ST/modelling/pipeline/metrics`       | FN           |        both          |   X      | | :)
+| `ST/modelling/pipeline/summary`       | FN           |       both           |   X      | | :)
+| `ST/modelling/pipeline/train`         | FN           |      both            |   X      | | :)
+| `ST/modelling/pipeline/save`          | FN           |     both             |   X      | | :)
+| `ST/page/deployment`                  | FN           |    both              |   X      | | :)
+| `ST/deployment/load`                  | FN           |   both               |   X      | | :)
+| `ST/deployment/predict`               | FN           |  both                |   X      | | :)
 
 If you add extra features, please indicate them below:
 | Requirement                           | Type (FN/NF) | Implemented by       | Implementation Completed (add X if done) | Comment |

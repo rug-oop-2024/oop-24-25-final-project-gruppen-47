@@ -60,6 +60,7 @@ try:
             split=split / 100,
         )
         results = st.session_state.pipeline.execute()
+        st.write(f"{results["labels"]}")
         st.write(
             f"**Model Parameters**: {st.session_state.pipeline.model.parameters}"
         )

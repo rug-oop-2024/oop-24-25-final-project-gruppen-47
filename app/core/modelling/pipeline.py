@@ -15,17 +15,17 @@ from autoop.core.ml.metric import (
 )
 
 
-def select_model(type: Literal["classification", "regression"]) -> Model:
+def select_model(type: Literal["categorical", "numerical"]) -> Model:
     """
     Select a model.
 
     Args:
-        type (Literal["classification", "regression"]): Type of the model.
+        type (Literal["categorical", "numerical"]): Type of the model.
 
     Returns:
         None
     """
-    if type == "classification":
+    if type == "categorical":
         st.write(
             "Based on the selected input features, you have to use classification models."
         )
@@ -45,18 +45,18 @@ def select_model(type: Literal["classification", "regression"]) -> Model:
 
 
 def select_metric(
-    type: Literal["classification", "regression"]
+    type: Literal["categorical", "numerical"]
 ) -> List[Metric]:
     """
     Select a metric.
 
     Args:
-        type (Literal["classification", "regression"]): Type of the model.
+        type (Literal["categorical", "numerical"]): Type of the model.
 
     Returns:
         None
     """
-    if type == "classification":
+    if type == "categorical":
         metric_list = CLASSIFICATION_METRICS
     else:
         metric_list = REGRESSION_METRICS
