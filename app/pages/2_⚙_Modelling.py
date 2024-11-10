@@ -9,14 +9,18 @@ from autoop.core.ml.metric import (
     Recall,
     RootMeanSquaredError,
 )
-from autoop.core.ml.model.classification.k_nearest_neighbors import KNearestNeighbors
+from autoop.core.ml.model.classification.k_nearest_neighbors import (
+    KNearestNeighbors,
+)
 from autoop.core.ml.model.classification.random_forest_wrap import RandomForest
 from autoop.core.ml.model.regression.multiple_linear_regression import (
     MultipleLinearRegression,
 )
 from autoop.core.ml.model.regression.ridge_wrap import Ridge
 from autoop.core.ml.model.regression.lasso_wrap import Lasso
-from autoop.core.ml.model.classification.naive_bayes_wrap import NaiveBayesModel
+from autoop.core.ml.model.classification.naive_bayes_wrap import (
+    NaiveBayesModel,
+)
 from app.core.modelling.datasets import pick_dataset, select_features
 from autoop.core.ml.pipeline import Pipeline
 
@@ -68,7 +72,10 @@ else:
 # TODO change metrics to have attribute categorical or numerical
 
 split = st.slider(
-    "Please select the percentage of the dataset that will go for training.", 0, 100, 50
+    "Please select the percentage of the dataset that will go for training.",
+    0,
+    100,
+    50,
 )
 
 st.write(f"## Pipeline Configuration")
@@ -95,8 +102,12 @@ if run:
     )
     results = pipeline.execute()
     st.write(f"**Model Parameters**: {pipeline.model.parameters}")
-    st.write(f"**Metrics on evaluation set**: {results["metrics_on_evaluation_set"]}")
-    st.write(f"**Metrics on training set**: {results["metrics_on_training_set"]}")
+    st.write(
+        f"**Metrics on evaluation set**: {results["metrics_on_evaluation_set"]}"
+    )
+    st.write(
+        f"**Metrics on training set**: {results["metrics_on_training_set"]}"
+    )
     st.write(f"**Predictions**: {results["predictions"]}")
 
     # artifact_name = st.text_input("Enter your pipleine name:")
