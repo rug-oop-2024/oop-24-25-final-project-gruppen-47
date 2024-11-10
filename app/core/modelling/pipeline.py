@@ -72,7 +72,7 @@ def select_metric(type: Literal["categorical", "numerical"]) -> List[Metric]:
 def select_split() -> int:
     """
     Select the split percentage.
-    
+
     Returns:
         int: The split percentage.
     """

@@ -42,7 +42,7 @@ try:
     if labels is not None:
         st.write(
             f"**Predictions**: "
-            f"{", ".join([labels[prd] for prd in predictions])}"
+            f"{", ".join([labels[prd] for prd in predictions])}"  # noqa: E999
         )
     else:
         st.write(f"**Predictions**: {predictions}")

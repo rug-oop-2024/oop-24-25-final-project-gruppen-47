@@ -63,7 +63,7 @@ try:
         results = st.session_state.pipeline.execute()
         labels = results["labels"]
         if labels is not None:
-            st.write(f"Classes: {", ".join(labels)}")
+            st.write(f"Classes: {", ".join(labels)}")  # noqa: E999
 
         st.write(
             f"**Model Parameters**:{st.session_state.pipeline.model.parameters}"
