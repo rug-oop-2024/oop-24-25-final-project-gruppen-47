@@ -3,7 +3,11 @@ import streamlit as st
 from app.core.system import AutoMLSystem
 
 from app.core.modelling.datasets import pick_dataset, select_features
-from app.core.modelling.pipeline import select_model, select_metric
+from app.core.modelling.pipeline import (
+    select_model,
+    select_metric,
+    select_split,
+)
 from autoop.core.ml.pipeline import Pipeline
 
 automl = AutoMLSystem.get_instance()
@@ -22,18 +26,14 @@ write_helper_text(
 
 selected_dataset = pick_dataset()
 
-input_features, target_feature = select_features(selected_dataset)
+if selected_dataset:
+    input_features, target_feature = select_features(selected_dataset)
 
-model = select_model(target_feature.type)
+    model = select_model(target_feature.type)
 
-metrics = select_metric(target_feature.type)
+    metrics = select_metric(target_feature.type)
 
-split = st.slider(
-    "Please select the percentage of the dataset that will go for training.",
-    0,
-    100,
-    50,
-)
+    split = select_split()
 
 st.write(f"## Pipeline Configuration")
 

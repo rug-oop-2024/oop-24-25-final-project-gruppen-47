@@ -67,3 +67,14 @@ def select_metric(
     )
 
     return [get_metric(metric) for metric in metrics]
+
+
+def select_split() -> int:
+    split = st.slider(
+        "Please select the percentage of the dataset that will go for training",
+        0,
+        100,
+        50,
+    )
+
+    return split

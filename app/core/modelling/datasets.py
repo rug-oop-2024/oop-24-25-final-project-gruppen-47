@@ -18,6 +18,10 @@ def pick_dataset() -> Dataset:
     automl = AutoMLSystem.get_instance()
     datasets = automl.registry.list(type="dataset")
 
+    if not datasets:
+        st.write("No datasets found. Please upload a dataset.")
+        return None
+
     selected_dataset = st.selectbox(
         "Please choose a dataset.",
         datasets,
