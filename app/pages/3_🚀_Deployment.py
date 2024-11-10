@@ -69,6 +69,16 @@ try:
         mime="text/csv",
     )
 
+except AttributeError:
+    st.toast("Please upload a CSV file for predictions.")
+
 except ValueError as e:
-    # st.write("Please upload a CSV file for predictions.")
-    st.write(e.args[0])
+    if e.args[0] == "need at least one array to concatenate":
+        st.toast("Please select features from the dataset to predict.")
+    else:
+        st.write(f"Incorrect number of features: {e.args[0]}")
+        st.write(
+            "This error may be caused by selecting categorical features on "
+            "accident. Categorical features are one-hot encoded and may "
+            "result in more features."
+            ) 
