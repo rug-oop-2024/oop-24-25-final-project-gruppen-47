@@ -12,6 +12,7 @@ import pandas as pd
 
 
 class Pipeline:
+    """Pipeline class."""
 
     def __init__(
         self,
@@ -20,18 +21,19 @@ class Pipeline:
         model: Model,
         input_features: List[Feature],
         target_feature: Feature,
-        split=0.8,
+        split: float = 0.8,
     ) -> None:
         """
         Initialize the pipeline with the given parameters.
-        
+
         Args:
             metrics: List of metrics to evaluate the model
             dataset: Dataset
             model: Model
             input_features: List of features to be used as input
             target_feature: Feature to be used as target
-            split: float representing the percentage of the dataset that will go for training
+            split: float representing the percentage of the dataset 
+                    that will go for training
         """
         self._dataset = dataset
         self._model = model
@@ -41,11 +43,12 @@ class Pipeline:
         self._artifacts = {}
         self._split = split
         if (
-            target_feature.type == "categorical"
-            and model.type != "classification"
+            target_feature.type == "categorical" and 
+            model.type != "classification"
         ):
             raise ValueError(
-                "Model type must be classification for categorical target feature"
+                "Model type must be classification "\
+                "for categorical target feature"
             )
         if target_feature.type == "continuous" and model.type != "regression":
             raise ValueError(
@@ -66,12 +69,18 @@ Pipeline(
 
     @property
     def model(self) -> Model:
-        """Used to get the model generated during the pipeline execution to be saved"""
+        """
+        Used to get the model generated during the \
+            pipeline execution to be saved
+        """
         return self._model
 
     @property
     def artifacts(self) -> List[Artifact]:
-        """Used to get the artifacts generated during the pipeline execution to be saved"""
+        """
+        Used to get the artifacts generated during 
+            the pipeline execution to be saved
+        """
         artifacts = []
         for name, artifact in self._artifacts.items():
             artifact_type = artifact.get("type")
@@ -99,9 +108,9 @@ Pipeline(
     def _register_artifact(self, name: str, artifact: Artifact) -> None:
         """
         Register an artifact.
-        
+
         Args:
-            name: str representing the name of the artifact
+            name: str representing the name of the artifact \
             artifact: artifact to be registered
         """
         self._artifacts[name] = artifact
@@ -117,7 +126,6 @@ Pipeline(
         )
         for feature_name, data, artifact in input_results:
             self._register_artifact(feature_name, artifact)
-        # Get the input vectors and output vector, sort by feature name for consistency
         self._output_vector = target_data
         self._input_vectors = [
             data for (feature_name, data, artifact) in input_results
